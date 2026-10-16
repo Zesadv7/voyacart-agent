@@ -110,6 +110,9 @@ def load_suite(path=SUITE):
         if not re.fullmatch(r'[a-z0-9_]+', name) or set(strategy['overrides']) - POLICY_FIELDS:
             raise ValueError('策略仅允许 Harness 参数，不允许偷偷更换模型、目录或权限')
     for profile in suite['profiles'].values():
+        limit = profile.get('max_model_calls')
+        if limit is not None and (type(limit) is not int or not 0 <= limit <= 10000):
+            raise ValueError('物理请求上限必须是0..10000的整数')
         if profile['repetitions'] < 1 or profile['repetitions'] > 10:
             raise ValueError('重复次数必须在 1..10')
         if set(profile['cases']) - set(ids) or len(profile['cases']) != len(set(profile['cases'])):

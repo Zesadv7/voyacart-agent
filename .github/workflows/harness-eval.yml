@@ -14,7 +14,7 @@ on:
         default: false
       profile:
         type: choice
-        options: [smoke, dev, release]
+        options: [preflight, smoke, dev, release]
         default: smoke
 
 permissions:
@@ -100,7 +100,7 @@ jobs:
     env:
       LLM_BASE_URL: ${{ secrets.HARNESS_LLM_BASE_URL }}
       LLM_API_KEY: ${{ secrets.HARNESS_LLM_API_KEY }}
-      LLM_MODEL: ${{ vars.HARNESS_LLM_MODEL || 'qwen3.8-flash' }}
+      LLM_MODEL: ${{ vars.HARNESS_LLM_MODEL }}
       LLM_FALLBACK_MODEL: ''
       REDIS_URL: ''
       LANGFUSE_SECRET_KEY: ''
@@ -114,14 +114,33 @@ jobs:
         with:
           version: '0.12.23'
       - run: uv sync --frozen
+      - name: Check explicit model configuration
+        run: |
+          if [ -z "$LLM_API_KEY" ] || [ -z "$LLM_BASE_URL" ] || [ -z "$LLM_MODEL" ]; then
+            echo 'Missing HARNESS_LLM_API_KEY / HARNESS_LLM_BASE_URL secrets or HARNESS_LLM_MODEL variable.' >&2
+            exit 2
+          fi
+      - name: Model identity and tool round-trip preflight
+        if: env.LLM_MODEL == 'glm-5.3-flash' || inputs.profile == 'preflight'
+        run: |
+          suite_args=()
+          if [ "$LLM_MODEL" = glm-5.3-flash ]; then
+            suite_args+=(--suite eval/harness/v1/glm-5.3-flash-suite.json)
+          fi
+          uv run python -m scripts.model_preflight "${suite_args[@]}" --output eval/verification/ci-preflight
       - name: Real model evaluation
+        if: inputs.profile != 'preflight'
         env:
           HARNESS_PROFILE: ${{ inputs.profile || 'smoke' }}
         run: |
+          suite_args=()
+          if [ "$LLM_MODEL" = glm-5.3-flash ]; then
+            suite_args+=(--suite eval/harness/v1/glm-5.3-flash-suite.json)
+          fi
           if [ "$HARNESS_PROFILE" = release ]; then
-            uv run python -m scripts.eval.harness run --profile release --output eval/verification/ci-model --require-benefit
+            uv run python -m scripts.eval.harness run "${suite_args[@]}" --profile release --output eval/verification/ci-model --require-benefit
           else
-            uv run python -m scripts.eval.harness run --profile "$HARNESS_PROFILE" --output eval/verification/ci-model
+            uv run python -m scripts.eval.harness run "${suite_args[@]}" --profile "$HARNESS_PROFILE" --output eval/verification/ci-model
           fi
           uv run python -m scripts.eval.harness verify eval/verification/ci-model
       - name: Preserve HTML and raw failures
@@ -129,5 +148,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: harness-model-${{ github.run_id }}-${{ github.run_attempt }}
-          path: eval/verification/ci-model
+          path: |
+            eval/verification/ci-model
+            eval/verification/ci-preflight
           retention-days: 30

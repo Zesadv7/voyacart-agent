@@ -13,6 +13,7 @@ from app.infrastructure.context import ShoppingContext, ShoppingContextSnapshot
 from app.infrastructure.context_governance import ContextAwareAgent, LayeredContextMiddleware, governance, update_working_state, working_hint
 from app.infrastructure.context_usage import context_usage_sink
 from app.infrastructure.llm import create_chat_model
+from scripts.eval.harness.model_config import configure_evaluation_model
 
 
 def check_skill_answer(answer, version):
@@ -49,9 +50,7 @@ async def run_skill_replay(case, settings, throttle, folder, repetition, collect
     with patch("app.infrastructure.buyer_skills.uuid.uuid4", return_value=uuid.UUID(int=101)):
         skill = personal.save(buyer, "通勤背包筛选", "先核对预算，轻便优先", "先核对需求，轻便优先。")
     model = create_chat_model(settings, stream=True, throttle=throttle)
-    model.parameters.temperature = 0
-    model.parameters.max_tokens = runtime["output_limit"]
-    model.client.timeout = runtime["request_timeout_seconds"]
+    configure_evaluation_model(model, runtime)
     mode = settings.skill_catalog_mode
     prompt = ("实验隔离键 " + uuid.uuid4().hex + "\n本实验只核对当前 Skill 目录，不执行选购。"
               "只输出 JSON 对象，available 是布尔值，version 是当前版本字符串；不存在时为 null。"
@@ -146,9 +145,7 @@ async def run_cache_replay(case, settings, throttle, folder: Path, repetition, c
     # 每个试验的前置 nonce 隔离正文缓存；不能保证网关连工具前缀也完全冷启动。
     scope = ShoppingContext.set(ShoppingContextSnapshot('cache-replay', 'synthetic-buyer', 'zh-CN', 'CNY'))
     model = create_chat_model(settings, stream=True, throttle=throttle)
-    model.parameters.temperature = 0
-    model.parameters.max_tokens = runtime['output_limit']
-    model.client.timeout = runtime['request_timeout_seconds']
+    configure_evaluation_model(model, runtime)
     middleware = LayeredContextMiddleware(None, prompt_layout=settings.context_prompt_layout)
     prompt = ('实验隔离键 ' + uuid.uuid4().hex + '\n只读商品诊断。按最新用户需求回答，不调用工具。'
               '仅输出一个JSON对象，budget_major 是本次预算数值，sku_id 固定为 P1003-S1。'

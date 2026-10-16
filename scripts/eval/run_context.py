@@ -71,11 +71,12 @@ async def compact_for_evaluation(agent,middleware):
 
 
 class Benchmark:
-    def __init__(self, settings, throttle, folder, timing="pressure", *, stream=False, output_limit=8192, usage_hook=None, request_timeout=None):
+    def __init__(self, settings, throttle, folder, timing="pressure", *, stream=False, output_limit=8192, usage_hook=None, request_timeout=None, model_runtime=None):
         self.settings,self.throttle,self.folder=settings,throttle,folder
         self.timing=timing
         self.stream,self.output_limit,self.usage_hook=stream,output_limit,usage_hook
         self.request_timeout=request_timeout
+        self.model_runtime=model_runtime
         catalog=[json.loads(line) for line in (ROOT/'data/catalog-v1.jsonl').read_text().splitlines()]
         self.catalog=catalog[:5]
 
@@ -99,6 +100,9 @@ class Benchmark:
         model.parameters.max_tokens=self.output_limit
         model.parameters.temperature=0
         if self.request_timeout is not None:model.client.timeout=self.request_timeout
+        if self.model_runtime is not None:
+            from scripts.eval.harness.model_config import configure_evaluation_model
+            configure_evaluation_model(model, self.model_runtime)
         middleware=EvidenceCompactionMiddleware(store) if strategy=='legacy' else LayeredContextMiddleware(store,
             timing={'entry':'entry','after_use':'after_use'}.get(strategy,self.timing),summary=strategy!='deterministic',
             product_tokens=self.settings.context_product_tokens,target_tokens=self.settings.context_target_tokens,prompt_layout=self.settings.context_prompt_layout,

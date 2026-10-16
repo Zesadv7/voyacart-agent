@@ -18,6 +18,7 @@ import xml.etree.ElementTree as ET
 
 from scripts.eval.harness.contracts import ROOT, SCHEMA_VERSION, assert_output_path, digest, execution_environment, load_suite, source_manifest, write_json
 from scripts.eval.harness.report import render
+from scripts.eval.harness.model_config import ModelCallBudget, model_call_budget, validate_model_config
 
 
 async def contract_checks(suite, output):
@@ -82,7 +83,7 @@ async def execute_case(case, strategy, repetition, settings, suite, work, thrott
     else:
         runner=Benchmark(configured,throttle,work,configured.context_pruning_timing,stream=False,
                          output_limit=suite['runtime']['output_limit'],usage_hook=collect,
-                         request_timeout=suite['runtime']['request_timeout_seconds'])
+                         request_timeout=suite['runtime']['request_timeout_seconds'],model_runtime=suite['runtime'])
         row=await runner.run_case(case,'layered' if configured.context_strategy=='layered' else 'legacy',repetition)
         row=score([row],{case['id']:case})[0]
         if case.get('expected_black_skus'):
@@ -125,6 +126,11 @@ async def run_profile(profile, output, *, suite_path=None, strategies=None, case
         context_size=runtime['context_size'],reply_token_budget=0,token_budget_total=0,otlp_endpoint='',
         otlp_traces_endpoint='',otlp_headers='',otlp_traces_headers='',harness_enabled=True,
         llm_min_interval_seconds=runtime['min_interval_seconds'],llm_max_concurrency=1)
+    if profile != 'contracts':
+        for strategy in names:
+            validate_model_config(replace(settings, **suite['strategies'][strategy]['overrides']), runtime)
+    limit = selected.get('max_model_calls')
+    budget = ModelCallBudget(limit) if limit is not None else None
     frozen=source_manifest()
     # 工作区可能尚未提交，仅有 Git SHA 不足以复现；归档白名单源码，绝不打包 .env/数据库。
     with tarfile.open(output/'source.tar.gz','w:gz') as archive:
@@ -133,9 +139,10 @@ async def run_profile(profile, output, *, suite_path=None, strategies=None, case
       'status':'running','profile':actual_profile,'requested_profile':profile,'cases':ids,'strategies':names,
       'repetitions':selected['repetitions'],'model':settings.llm_model,'gateway_sha256':digest(settings.llm_base_url.encode()),
       'runtime':runtime,'execution_environment':execution_environment(settings),
-      'temperature':0,'dataset_sha256':suite['_dataset_sha256'],'suite_sha256':suite['_suite_sha256'],
+      'temperature':runtime.get('model_config', {}).get('temperature', 0),'dataset_sha256':suite['_dataset_sha256'],'suite_sha256':suite['_suite_sha256'],
       'source':frozen,'source_stable':None,'policy_overrides':{n:suite['strategies'][n]['overrides'] for n in names},
       'source_archive_sha256':digest((output/'source.tar.gz').read_bytes()),
+      'physical_call_limit':limit,'physical_calls_started':0,
       'gates':suite['gates'],'pricing':suite['pricing'],'limits':suite['limits'],'semantic_answer_cache':False,
       'synthetic':suite.get('suite_type') != 'esci-dev-v1','contracts':None,'dataset_provenance':suite['dataset_provenance'],
       'suite_type':suite.get('suite_type'), 'data_fingerprints':suite.get('inputs', {}),
@@ -144,7 +151,9 @@ async def run_profile(profile, output, *, suite_path=None, strategies=None, case
                              'request_fields': 'model/messages/tools/tool_choice/response_format/temperature/max_tokens/max_completion_tokens/stream',
                              'scope': '仅临时数据库和合成买家；不包含鉴权、headers、客户端配置'}}
     rows=[]
+    budget_token = None
     def checkpoint():
+        manifest['physical_calls_started'] = budget.started if budget else None
         write_json(output/'manifest.json',manifest)
         return render(output,manifest,rows)
     # None 与未执行都不是通过。
@@ -167,6 +176,7 @@ async def run_profile(profile, output, *, suite_path=None, strategies=None, case
                   '。GitHub Actions 请配置对应的 HARNESS_LLM_API_KEY / HARNESS_LLM_BASE_URL secrets。', flush=True)
             return checkpoint()
         throttle=GatewayThrottle(1,runtime['min_interval_seconds'])
+        budget_token = model_call_budget.set(budget)
         cases={c['id']:c for c in suite['_cases']}
         # 场景次序固定种子打散；同场景的策略交错，重复时轮换顺序。
         order=list(ids);random.Random(runtime['seed']).shuffle(order)
@@ -202,6 +212,9 @@ async def run_profile(profile, output, *, suite_path=None, strategies=None, case
                     write_json(output/'rows'/f'{case_id}-{strategy}-{repetition}.json',row)
                     checkpoint()
                     print(json.dumps({**identity,'passed':row['passed'],'error':row.get('error')},ensure_ascii=False),flush=True)
+                    if budget and budget.exhausted:
+                        manifest['status']='failed';manifest['error']='model_call_limit_exceeded'
+                        return checkpoint()
         manifest['status']='completed'
     except (asyncio.CancelledError,KeyboardInterrupt):
         manifest['status']='cancelled'
@@ -210,6 +223,8 @@ async def run_profile(profile, output, *, suite_path=None, strategies=None, case
         manifest['status']='failed';manifest['error']=type(error).__name__
         raise
     finally:
+        if budget_token is not None:
+            model_call_budget.reset(budget_token)
         manifest['source_stable']=source_manifest()['sha256']==frozen['sha256']
         if suite.get('suite_type') == 'esci-dev-v1':
             import hashlib

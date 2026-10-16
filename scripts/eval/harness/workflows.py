@@ -32,6 +32,7 @@ from app.infrastructure.persistence.sql.trade_store import SqlTradeStore
 from app.infrastructure.resilience import CircuitBreakerRegistry
 from app.infrastructure.shopping_forms import ShoppingFormStore
 from scripts.eval.harness.contracts import ROOT
+from scripts.eval.harness.model_config import configure_evaluation_model
 
 
 class IsolatedKnowledge:
@@ -165,18 +166,14 @@ async def _run_workflow(case, settings, throttle, folder, repetition, usage_hook
         original = agent_factory.build
         def tracked_build(original=original):
             built = original()
-            built.model.parameters.max_tokens = runtime['output_limit']
-            built.model.parameters.temperature = 0
-            built.model.client.timeout = runtime['request_timeout_seconds']
+            configure_evaluation_model(built.model, runtime)
             models.append(built.model)
             own_model(built.model)
             return built
         agent_factory.build = tracked_build
     def build(state=None):
         built = factory.build(state)
-        built.model.parameters.max_tokens = runtime['output_limit']
-        built.model.parameters.temperature = 0
-        built.model.client.timeout = runtime['request_timeout_seconds']
+        configure_evaluation_model(built.model, runtime)
         models.append(built.model)
         own_model(built.model)
         return built
