@@ -54,3 +54,14 @@
 - 原失败保留：[标准端点运行 38866364091](https://github.com/Zesadv7/voyacart-agent/actions/runs/38866364091) 实际尝试 1 次，返回 1113，金额未知；[新配置运行 38868744231](https://github.com/Zesadv7/voyacart-agent/actions/runs/38868744231) 在旧套件端点校验处停止，0 个模型请求。两次原始证据分别位于 `eval/verification/2026-10-16-glm-preflight-38866364091/`、`eval/verification/2026-10-16-glm-preflight-38868744231/`，不能用旧结果判断新 Secret。
 - 当前补丁本地定向验证：首轮176 passed / 7.40 秒；补充供应商拒绝后的跨场景停止和错误码脱敏后，177 passed / 8.11 秒。原始日志/XML 位于 `eval/verification/2026-10-16-glm-endpoint-config/focused.*`、`final.*`。覆盖无网络分类/脱敏、显式双套件、未知 usage 的功能通过、401/403/429 单次停止、8 请求上限、其它 provider 不变。完整新 CI 与真实 Coding Plan 预检尚待执行，不宣称已通过。
 - 启用：先选 `config-check` 与实际 `endpoint_mode`，无需模型预算批准；需要功能验证时新建 `preflight`，选择相同端点模式并批准预算。完整 smoke/release 必须另行显式启动。回滚本阶段补丁会恢复仅标准套件；不得删除已保存失败。
+
+
+## Coding Plan 首次真实响应与 none 工具适配
+
+- [运行 38872973913](https://github.com/Zesadv7/voyacart-agent/actions/runs/38872973913) 于 08:19:59 UTC 从 `370454a347ac5f24ed7a3b6bcfbf722a9f9ef24c` 启动；配置诊断确认 `endpoint_mode=coding_plan`、实际分类 coding_plan、`profile=preflight`，离线契约通过。
+- 首个非流式请求实际返回 `glm-5.3-flash`：输入178、输出47 tokens，约16.45秒。传入 `tool_choice=none` 且存在工具定义时，响应仍含工具调用，协议保护以 `tools_forbidden` 拦截；物理请求1/8，实际工具执行0，后续请求未发起。费用和套餐扣量未知，功能预检未通过。原始 ZIP/JSON 保留于 `eval/verification/2026-10-16-glm-preflight-38872973913/`；ZIP SHA256 为 `64dd54f28c0e785feb782853d9c3e874f1548cab5e771a8f839e2e07ba9a825b`。
+- 最小修复仅修改 GLM 评测 HTTP 适配：禁止工具时不发送 tools 和 tool_choice，避免向模型提供可调用定义。协议保护不放宽：实际请求的 allowed 集合为空，任何意外 tool_calls 仍在返回 AgentScope 前失败。auto、指定函数、思考历史和其它 provider 保持原样，不追加重试或替换模型。
+- 两套 GLM 合同明确升级 adapter/experiment v2，冻结 `tool_choice_none=omit_tools`，源码指纹与旧失败分开。未来若复用于缓存专项中通过 none 禁止工具的 tools-schema 变化场景，适配后不再向供应商发送 schema，因此不能解释为工具前缀变化/缓存失效验证；当前 GLM 套件 cases.json 不含该专项场景，本次不声称缓存收益已验收。
+- 验证范围为 GLM 实际 SDK MockTransport 的流式/非流式、正常文本及恶意意外工具响应、其它 provider 保持原 none 参数、八请求工具往返和既有协议/公开输出/CI安全契约。新真实预检须由用户启动新运行；不重跑旧失败，不以离线通过声称真实预检通过。
+- 本地定向结果：132 passed / 5.34 秒；原始日志/XML 为 `eval/verification/2026-10-16-glm-none-tools/focused.*`，独立静态审查未发现权限放宽。完整后台 CI 和新真实预检尚待执行。
+- 启用仍选 main / preflight / coding_plan 并批准预算。回滚本段相关提交恢复 v1 none 请求形状；保留本次真实失败证据，且禁止将旧失败当 v2 结果。

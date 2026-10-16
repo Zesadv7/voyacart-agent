@@ -8,7 +8,7 @@ from scripts.eval.endpoint_config import GLM_MODEL, GLM_BASE_URL, GLM_CODING_URL
 
 
 GLM_CONFIG = {
-    'adapter': 'bigmodel-glm-5.3-flash-v1',
+    'adapter': 'bigmodel-glm-5.3-flash-v2',
     'model': GLM_MODEL,
     'base_url': GLM_BASE_URL,
     'endpoint_mode': 'standard',
@@ -18,8 +18,9 @@ GLM_CONFIG = {
     'thinking': {'type': 'enabled', 'clear_thinking': False},
     'max_tokens_parameter': 'max_tokens',
     'tool_stream': True,
+    'tool_choice_none': 'omit_tools',
 }
-GLM_CODING_CONFIG = {**GLM_CONFIG, 'adapter': 'bigmodel-glm-5.3-flash-coding-plan-v1',
+GLM_CODING_CONFIG = {**GLM_CONFIG, 'adapter': 'bigmodel-glm-5.3-flash-coding-plan-v2',
                      'base_url': GLM_CODING_URL, 'endpoint_mode': 'coding_plan'}
 
 
@@ -90,6 +91,11 @@ def configure_evaluation_model(model, runtime):
             if request.get('model') != config['model']:
                 raise ValueError('实际模型与冻结 GLM suite 不一致')
             request = deepcopy(request)
+            if request.get('tool_choice') == 'none':
+                # GLM 实测可能忽略带工具定义的 none；禁止工具时不向服务声明任何工具。
+                # ResponseContract 仍以空 allowed 集合拒绝任何意外 tool_calls。
+                request.pop('tools', None)
+                request.pop('tool_choice', None)
             # AgentScope 2.0.8 默认写 max_completion_tokens；BigModel 文档只声明 max_tokens。
             maximum = request.pop('max_completion_tokens', request.get('max_tokens', runtime['output_limit']))
             request['max_tokens'] = min(maximum, runtime['output_limit'])

@@ -179,7 +179,7 @@
     "context_size": 128000,
     "seed": 20260918,
     "model_config": {
-      "adapter": "bigmodel-glm-5.3-flash-coding-plan-v1",
+      "adapter": "bigmodel-glm-5.3-flash-coding-plan-v2",
       "model": "glm-5.3-flash",
       "base_url": "https://open.bigmodel.cn/api/coding/paas/v4",
       "endpoint_mode": "coding_plan",
@@ -191,7 +191,8 @@
         "clear_thinking": false
       },
       "max_tokens_parameter": "max_tokens",
-      "tool_stream": true
+      "tool_stream": true,
+      "tool_choice_none": "omit_tools"
     }
   },
   "gates": {
@@ -217,6 +218,6 @@
     "CP 不能以输入 token 降幅证明收益，独立启用需完整计费证明",
     "GLM Coding Plan 文本功能评测；标准 OpenAI 兼容直连，不伪装客户端或 headers；服务端拒绝即停止，功能通过不代表费用收益通过。"
   ],
-  "experiment_version": "bigmodel-glm-5.3-flash-coding-plan-stable-prefix-v1",
+  "experiment_version": "bigmodel-glm-5.3-flash-coding-plan-stable-prefix-v2",
   "scorer_version": "sku-quotes-v1.4-typed-scope"
 }

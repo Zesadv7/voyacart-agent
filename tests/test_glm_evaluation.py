@@ -180,6 +180,11 @@ async def test_preflight_uses_eight_bounded_requests_and_retains_reasoning(tmp_p
     for body in roundtrips:
         assistant=next(m for m in body['messages'] if m.get('tool_calls'))
         assert assistant['reasoning_content']=='synthetic-roundtrip-reasoning'
+    for offset in (0,4):
+        for index in (offset,offset+3):
+            assert 'tools' not in seen[index] and 'tool_choice' not in seen[index]
+        assert seen[offset+1]['tools'] and seen[offset+1]['tool_choice']=='auto'
+        assert seen[offset+2]['tools'] and seen[offset+2]['tool_choice']['function']['name']=='echo_probe'
     assert all(b['tool_stream'] for b in seen if b['stream'])
     assert 'synthetic-roundtrip-reasoning' not in (out/'report.html').read_text()
 
@@ -287,3 +292,57 @@ async def test_runner_stops_at_physical_limit_and_keeps_partial_evidence(tmp_pat
     assert manifest['physical_calls_started']==1
     assert len(json.loads((out/'results.json').read_text()))==1
     assert model_call_budget.get() is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('suite',[SUITE,CODING_SUITE])
+@pytest.mark.parametrize('streamed',[False,True])
+@pytest.mark.parametrize('illegal',[False,True])
+async def test_glm_none_omits_tools_but_rejects_unexpected_calls(tmp_path,suite,streamed,illegal):
+    from agentscope.tool import ToolChoice
+    from app.infrastructure.model_protocol import ModelProtocolViolation
+    from app.infrastructure.context_usage import context_usage_sink
+    cfg=load_suite(suite)['runtime'];seen=[];samples=[]
+    def handler(request):
+        body=json.loads(request.content);seen.append(body)
+        assert 'tools' not in body and 'tool_choice' not in body
+        reply={**body,'tool_choice':{'type':'function','function':{'name':'echo_probe'}}} if illegal else body
+        return response_for(reply)
+    model=await client_model(tmp_path,handler,llm_model=GLM_MODEL,stream=streamed)
+    configure_evaluation_model(model,cfg)
+    original_tools=[{'type':'function','function':{'name':'echo_probe','description':'probe',
+        'parameters':{'type':'object','properties':{}}}}]
+    token=context_usage_sink.set(samples.append)
+    async def consume():
+        result=await model(messages(),tools=original_tools,tool_choice=ToolChoice(mode='none'))
+        if streamed:
+            async for part in result:
+                assert not any(isinstance(b,ToolCallBlock) for b in part.content)
+        else:
+            assert not any(isinstance(b,ToolCallBlock) for b in result.content)
+    try:
+        if illegal:
+            with pytest.raises(ModelProtocolViolation) as error:await consume()
+            assert error.value.code=='tools_forbidden'
+        else:await consume()
+        assert len(seen)==1 and original_tools[0]['function']['name']=='echo_probe'
+        assert samples[0]['prompt_cache']['protocol_status']==('tools_forbidden' if illegal else 'valid')
+        assert type(samples[0]['input_tokens']) is int
+    finally:
+        context_usage_sink.reset(token);await model.client.close()
+
+
+@pytest.mark.asyncio
+async def test_other_provider_none_keeps_declared_tools(tmp_path):
+    from agentscope.tool import ToolChoice
+    seen=[]
+    def handler(request):
+        seen.append(json.loads(request.content));return httpx.Response(200,json=completion())
+    model=await client_model(tmp_path,handler)
+    configure_evaluation_model(model,load_suite()['runtime'])
+    declared=[{'type':'function','function':{'name':'lookup','description':'probe',
+        'parameters':{'type':'object','properties':{}}}}]
+    try:
+        await model(messages(),tools=declared,tool_choice=ToolChoice(mode='none'))
+        assert seen[0]['tools']==declared and seen[0]['tool_choice']=='none'
+    finally:await model.client.close()

@@ -179,7 +179,7 @@
     "context_size": 128000,
     "seed": 20260918,
     "model_config": {
-      "adapter": "bigmodel-glm-5.3-flash-v1",
+      "adapter": "bigmodel-glm-5.3-flash-v2",
       "model": "glm-5.3-flash",
       "base_url": "https://open.bigmodel.cn/api/paas/v4",
       "endpoint_mode": "standard",
@@ -191,7 +191,8 @@
         "clear_thinking": false
       },
       "max_tokens_parameter": "max_tokens",
-      "tool_stream": true
+      "tool_stream": true,
+      "tool_choice_none": "omit_tools"
     }
   },
   "gates": {
@@ -222,6 +223,6 @@
     "CP 不能以输入 token 降幅证明收益，独立启用需完整计费证明",
     "GLM专用文本评测；始终思考max，保留reasoning_content；标准价估算不是已结算账单，真实模型调用尚未执行。"
   ],
-  "experiment_version": "bigmodel-glm-5.3-flash-stable-prefix-v1",
+  "experiment_version": "bigmodel-glm-5.3-flash-stable-prefix-v2",
   "scorer_version": "sku-quotes-v1.4-typed-scope"
 }
