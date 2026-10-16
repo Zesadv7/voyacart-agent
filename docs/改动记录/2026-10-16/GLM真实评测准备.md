@@ -9,7 +9,7 @@
 ## 官方配置核验（2026-10-16）
 
 - [模型文档](https://docs.bigmodel.cn/cn/guide/models/vlm/glm-5.3-flash)：准确模型 ID `glm-5.3-flash`，1M 上下文、128K 最大输出，支持工具调用，思考只能开启。
-- [OpenAI 兼容接口](https://docs.bigmodel.cn/cn/guide/develop/openai/introduction)：按量 Chat Completion base URL 为 `https://open.bigmodel.cn/api/paas/v4`。不使用 Coding Plan 专用端点。
+- [OpenAI 兼容接口](https://docs.bigmodel.cn/cn/guide/develop/openai/introduction)：按量 Chat Completion base URL 为 `https://open.bigmodel.cn/api/paas/v4`。最初准备阶段仅选择标准接口；后续用户选择 Coding Plan 的独立配置见下节。
 - [思考模式](https://docs.bigmodel.cn/cn/guide/capabilities/thinking-mode)：交错工具调用必须传回 `reasoning_content`；启用保留式思考后应保留其顺序与原文。
 - [价格](https://docs.bigmodel.cn/cn/guide/start/pricing)：标准输入/缓存输入/输出分别为人民币 0.8 / 0.23 / 2.8 元每百万 tokens。主价格页另列限时五折，截止日未知；预算参考标准价，不能冒充已结算账单。
 - 官方兼容指南与 API schema 对 temperature=0 的说明不一致。本套件明确采用模型页推荐的 1，固定 top_p=0.95、reasoning_effort=max、thinking.enabled、clear_thinking=false，不依赖默认值。
@@ -44,3 +44,13 @@
 ## 启用与回滚
 
 仅在专用 suite 与显式 GLM 模型配置下生效，不改生产 `.env`、模型目录或默认模型。回滚此提交即可恢复旧评测实现；必须保留已生成的失败/成功报告，不覆盖旧证据。关联版本为包含本记录的 Git 提交；远端公开提交 SHA 在发布后由 Actions 记录。
+
+## 后续：显式端点选择与快速诊断
+
+- 用户明确选择 Coding Plan。按[官方接入地址](https://docs.bigmodel.cn/cn/coding-plan/tool/others)新增独立冻结套件 `glm-5.3-flash-coding-plan-suite.json`，端点为 `https://open.bigmodel.cn/api/coding/paas/v4`；模型、数据、功能参数和请求上限与标准套件一致，端点与实验指纹分别记录，不混用两类结果。客户端原生直连，不伪装工具身份、不添加伪装 headers、不代理转发，服务端拒绝即停止。
+- 工作流新增 `endpoint_mode=standard/coding_plan` 显式选择；所选类型与用户注入的 URL 必须匹配，不覆盖 Secret、不自动回退标准地址。Coding Plan 不套用按量价格，实际 token、积分和金额缺失均保持未知；完整成本收益门禁未放宽。
+- 新默认档 `config-check` 仅以标准库检查配置分类、模型是否匹配和 key 是否存在，不导入应用 `.env`、不拿 key 值、不创建模型客户端，也不等待安全契约。输出只包含固定枚举及布尔值，不输出原 URL、userinfo、query 或凭据。其它 provider 的既有评测参数不变。
+- 功能预检仍最多 8 个请求、无业务工具执行、无重试和备用模型；模型身份与工具协议必须匹配。`usage_known=false` 不再直接使功能预检失败，`billing_verified=false` 始终明确；功能通过不等于成本收益通过。
+- 原失败保留：[标准端点运行 38866364091](https://github.com/Zesadv7/voyacart-agent/actions/runs/38866364091) 实际尝试 1 次，返回 1113，金额未知；[新配置运行 38868744231](https://github.com/Zesadv7/voyacart-agent/actions/runs/38868744231) 在旧套件端点校验处停止，0 个模型请求。两次原始证据分别位于 `eval/verification/2026-10-16-glm-preflight-38866364091/`、`eval/verification/2026-10-16-glm-preflight-38868744231/`，不能用旧结果判断新 Secret。
+- 当前补丁本地定向验证：首轮176 passed / 7.40 秒；补充供应商拒绝后的跨场景停止和错误码脱敏后，177 passed / 8.11 秒。原始日志/XML 位于 `eval/verification/2026-10-16-glm-endpoint-config/focused.*`、`final.*`。覆盖无网络分类/脱敏、显式双套件、未知 usage 的功能通过、401/403/429 单次停止、8 请求上限、其它 provider 不变。完整新 CI 与真实 Coding Plan 预检尚待执行，不宣称已通过。
+- 启用：先选 `config-check` 与实际 `endpoint_mode`，无需模型预算批准；需要功能验证时新建 `preflight`，选择相同端点模式并批准预算。完整 smoke/release 必须另行显式启动。回滚本阶段补丁会恢复仅标准套件；不得删除已保存失败。

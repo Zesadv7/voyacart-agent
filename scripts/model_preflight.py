@@ -62,13 +62,18 @@ async def run(output, suite_path=None):
                             raise ValueError('预检工具结果续答不匹配')
                         row['tool_roundtrip']=True
                 except Exception as error:
-                    row['error']=getattr(error,'code',type(error).__name__)
+                    # 供应商任意 error.code/message 不可信，不能原样写入报告。
+                    code=getattr(error,'code',None)
+                    row['error']=code if code in ('1113',) else type(error).__name__
+                    status=getattr(error,'status_code',None)
+                    row['http_status']=status if type(status) is int and 400 <= status <= 599 else None
                 finally:context_usage_sink.reset(token)
                 row['usage']=samples
+                row['usage_known']=bool(samples) and all(
+                    type(s.get('input_tokens')) is int and type(s.get('output_tokens')) is int for s in samples)
                 row['passed']=bool(samples) and not row['error'] and all(
                     s.get('prompt_cache',{}).get('response_model_matches') is True and
-                    s.get('prompt_cache',{}).get('protocol_status')=='valid' and
-                    type(s.get('input_tokens')) is int and type(s.get('output_tokens')) is int for s in samples)
+                    s.get('prompt_cache',{}).get('protocol_status')=='valid' for s in samples)
                 rows.append(row);write_json(output/'results.json',rows)
                 if row['error']:
                     break
@@ -80,6 +85,7 @@ async def run(output, suite_path=None):
     report={'requested_model':settings.llm_model,'passed':len(rows)==6 and all(r['passed'] for r in rows),
         'source_sha256':source,'source_stable':source_manifest()['sha256']==source,'calls':len(rows),
         'physical_calls_started':budget.started,'physical_call_limit':budget.limit,'runtime':runtime,
+        'usage_known':bool(rows) and all(r['usage_known'] for r in rows),'billing_verified':False,
         'tools_executed':0,'scope':'服务预检；不等于业务质量、BP或真实费用收益验收。'}
     write_json(output/'summary.json',report)
     (output/'report.html').write_text('<!doctype html><meta charset="utf-8"><title>模型服务预检</title>'

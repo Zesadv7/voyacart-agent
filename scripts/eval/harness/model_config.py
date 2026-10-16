@@ -4,14 +4,14 @@ from copy import deepcopy
 from dataclasses import dataclass
 
 from agentscope.formatter import DeepSeekChatFormatter
+from scripts.eval.endpoint_config import GLM_MODEL, GLM_BASE_URL, GLM_CODING_URL, classify_endpoint
 
 
-GLM_MODEL = 'glm-5.3-flash'
-GLM_BASE_URL = 'https://open.bigmodel.cn/api/paas/v4'
 GLM_CONFIG = {
     'adapter': 'bigmodel-glm-5.3-flash-v1',
     'model': GLM_MODEL,
     'base_url': GLM_BASE_URL,
+    'endpoint_mode': 'standard',
     'temperature': 1,
     'top_p': 0.95,
     'reasoning_effort': 'max',
@@ -19,10 +19,16 @@ GLM_CONFIG = {
     'max_tokens_parameter': 'max_tokens',
     'tool_stream': True,
 }
+GLM_CODING_CONFIG = {**GLM_CONFIG, 'adapter': 'bigmodel-glm-5.3-flash-coding-plan-v1',
+                     'base_url': GLM_CODING_URL, 'endpoint_mode': 'coding_plan'}
 
 
 class ModelCallLimitExceeded(RuntimeError):
     """达到预先冻结的物理请求上限；不再提交新 HTTP 请求。"""
+
+
+class ProviderRejected(RuntimeError):
+    """供应商已拒绝请求；整个本次评测禁止继续发起请求。"""
 
 
 @dataclass
@@ -30,8 +36,11 @@ class ModelCallBudget:
     limit: int
     started: int = 0
     exhausted: bool = False
+    provider_rejected: bool = False
 
     def reserve(self):
+        if self.provider_rejected:
+            raise ProviderRejected('供应商已拒绝请求；本次评测停止，不重试或切换端点')
         if self.started >= self.limit:
             self.exhausted = True
             raise ModelCallLimitExceeded('评测已达到冻结的物理模型请求上限')
@@ -42,15 +51,18 @@ model_call_budget = ContextVar('evaluation_model_call_budget', default=None)
 
 
 def validate_model_config(settings, runtime):
+    actual_endpoint = classify_endpoint(settings.llm_base_url)
     config = runtime.get('model_config')
     if not config:
-        if settings.llm_model == GLM_MODEL:
+        if settings.llm_model == GLM_MODEL or actual_endpoint == 'coding_plan':
             raise ValueError('glm-5.3-flash 必须显式选择已冻结的 GLM 评测 suite')
         return
-    if config != GLM_CONFIG:
+    if config not in (GLM_CONFIG, GLM_CODING_CONFIG):
         raise ValueError('未知或被修改的供应商评测参数合同')
-    if settings.llm_model != config['model'] or settings.llm_base_url.rstrip('/') != config['base_url']:
-        raise ValueError('模型或网关与冻结 GLM suite 不一致；禁止静默替换')
+    if settings.llm_model != config['model']:
+        raise ValueError('模型与冻结 GLM suite 不一致；请检查 HARNESS_LLM_MODEL，不会替换模型')
+    if settings.llm_base_url.rstrip('/') != config['base_url']:
+        raise ValueError(f"端点不匹配：期望={config['endpoint_mode']}，实际={actual_endpoint}；先运行 config-check 并核对 endpoint_mode 和 Repository secret HARNESS_LLM_BASE_URL，不会覆盖地址")
     if settings.llm_enable_thinking is not None:
         raise ValueError('GLM suite 不接受 LLM_ENABLE_THINKING；思考参数由冻结合同指定')
     if settings.prompt_cache_mode != 'passthrough':
@@ -93,6 +105,12 @@ def configure_evaluation_model(model, runtime):
         budget = model_call_budget.get()
         if budget is not None:
             budget.reserve()
-        return await original(*args, **request)
+        try:
+            return await original(*args, **request)
+        except Exception as error:
+            status = getattr(error, 'status_code', None)
+            if config and budget is not None and type(status) is int and 400 <= status <= 599:
+                budget.provider_rejected = True
+            raise
 
     model.client.chat.completions.create = bounded_create

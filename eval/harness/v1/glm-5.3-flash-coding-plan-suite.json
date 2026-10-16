@@ -1,0 +1,222 @@
+{
+  "schema_version": "harness-eval-v1",
+  "cases_file": "cases.json",
+  "dataset_version": "v1.1-20260918",
+  "dataset_provenance": "40 个既有上下文模板的新参数集 + 8 个生产工厂工作流；参数留出，不宣称全新任务分布。 v1.1 从目录推导全部黑色 SKU，补齐曜石黑及价格币种归属断言；原 v1 冒烟结果不覆盖。",
+  "strategies": {
+    "current": {
+      "label": "legacy_system / passthrough",
+      "overrides": {
+        "context_strategy": "layered",
+        "context_pruning_timing": "pressure",
+        "context_product_tokens": 6000,
+        "context_target_tokens": 48000,
+        "prompt_cache_mode": "passthrough",
+        "prompt_cache_policy": "static",
+        "context_prompt_layout": "legacy_system"
+      }
+    },
+    "candidate": {
+      "label": "stable_prefix / passthrough",
+      "overrides": {
+        "context_strategy": "layered",
+        "context_pruning_timing": "pressure",
+        "context_product_tokens": 6000,
+        "context_target_tokens": 48000,
+        "prompt_cache_mode": "passthrough",
+        "prompt_cache_policy": "static",
+        "context_prompt_layout": "stable_prefix"
+      }
+    }
+  },
+  "profiles": {
+    "contracts": {
+      "repetitions": 1,
+      "cases": [],
+      "purpose": "确定性安全回归，不调用模型",
+      "max_model_calls": 0
+    },
+    "smoke": {
+      "repetitions": 1,
+      "cases": [
+        "h1-dev-sku",
+        "h1-dev-budget",
+        "h1-dev-stock",
+        "h1-dev-cost",
+        "agent-sku",
+        "agent-approval"
+      ],
+      "purpose": "每次 Harness 改动的真实模型冒烟，不可发布",
+      "max_model_calls": 150
+    },
+    "dev": {
+      "repetitions": 2,
+      "cases": [
+        "h1-dev-sku",
+        "h1-dev-second",
+        "h1-dev-earliest",
+        "h1-dev-material",
+        "h1-dev-budget",
+        "h1-dev-country",
+        "h1-dev-selected",
+        "h1-dev-stock",
+        "h1-dev-cost",
+        "h1-dev-repeat",
+        "h1-dev-long-a",
+        "h1-dev-long-b",
+        "agent-sku",
+        "agent-approval",
+        "agent-form"
+      ],
+      "purpose": "开发调参，不能冒充留出结果",
+      "max_model_calls": 600
+    },
+    "release": {
+      "repetitions": 3,
+      "cases": [
+        "h1-hold-first",
+        "h1-hold-last",
+        "h1-hold-blue",
+        "h1-hold-black",
+        "h1-hold-price",
+        "h1-hold-old-price",
+        "h1-hold-tax",
+        "h1-hold-scope",
+        "h1-hold-dest",
+        "h1-hold-delete",
+        "h1-hold-order",
+        "h1-hold-approval",
+        "h1-hold-pair",
+        "h1-hold-desc",
+        "h1-hold-sku-stock",
+        "h1-hold-quote-cn",
+        "h1-hold-origin",
+        "h1-hold-retrieval",
+        "h1-hold-current-sku",
+        "h1-hold-negative",
+        "h1-hold-source",
+        "h1-hold-injection",
+        "h1-hold-long-a",
+        "h1-hold-long-b",
+        "h1-hold-long-c",
+        "h1-hold-long-d",
+        "h1-hold-long-e",
+        "h1-hold-long-f",
+        "agent-restart",
+        "agent-cancel",
+        "agent-owner",
+        "agent-injection",
+        "agent-long"
+      ],
+      "purpose": "参数冻结后留出验收，不自动发布",
+      "max_model_calls": 3000
+    }
+  },
+  "contract_tests": [
+    "tests/test_learning_pipeline.py",
+    "tests/test_harness_guards.py",
+    "tests/test_harness_middleware.py",
+    "tests/test_harness_infra.py",
+    "tests/test_harness_drift.py",
+    "tests/test_layered_context.py",
+    "tests/test_context_governance.py",
+    "tests/test_context_v2.py",
+    "tests/test_session_fencing.py",
+    "tests/test_native_memory_confirmation.py",
+    "tests/test_trade_store.py",
+    "tests/test_selected_skill.py",
+    "tests/test_prompt_cache.py",
+    "tests/test_prompt_cache_pruning.py",
+    "tests/test_structured_model_usage.py",
+    "tests/test_harness_evaluation.py",
+    "tests/test_cache_layout.py",
+    "tests/test_context_efficiency.py",
+    "tests/test_model_protocol.py",
+    "tests/test_visible_evidence.py",
+    "tests/test_skill_catalog.py",
+    "tests/test_buyer_workspace.py",
+    "tests/test_capability_registry.py",
+    "tests/test_context_prefix_recovery.py",
+    "tests/test_skill_evaluation_suite.py",
+    "tests/test_model_registry.py",
+    "tests/test_model_runtime_counting.py",
+    "tests/test_model_selection_runtime.py",
+    "tests/test_model_workspace.py",
+    "tests/test_model_connection_identity.py",
+    "tests/test_public_output_boundary.py",
+    "tests/test_public_output_review.py",
+    "tests/test_orchestrator_output_boundary.py",
+    "tests/test_prepare_request_idempotency.py",
+    "tests/test_identity.py",
+    "tests/test_identity_matrix.py",
+    "tests/test_request_limits.py",
+    "tests/test_secret_scan.py",
+    "tests/test_catalog_identity.py",
+    "tests/test_catalog_provenance_public.py",
+    "tests/test_vector_catalog_identity.py",
+    "tests/test_esci_pairing.py",
+    "tests/test_esci_harness.py",
+    "tests/test_candidate_run_binding.py",
+    "tests/test_candidate_workspace.py",
+    "tests/test_candidate_workspace_routes.py",
+    "tests/test_run_admission.py",
+    "tests/test_queue_deadlines.py",
+    "tests/test_shared_breaker_atomic.py",
+    "tests/test_ag_ui_queue.py",
+    "tests/test_queue_api.py",
+    "tests/test_queue_reliability.py",
+    "tests/test_queue_retention.py",
+    "tests/test_bounded_recovery_probe.py",
+    "tests/test_glm_evaluation.py"
+  ],
+  "runtime": {
+    "concurrency": 1,
+    "min_interval_seconds": 2,
+    "model_retries": 0,
+    "request_timeout_seconds": 120,
+    "scenario_timeout_seconds": 900,
+    "output_limit": 8192,
+    "context_size": 128000,
+    "seed": 20260918,
+    "model_config": {
+      "adapter": "bigmodel-glm-5.3-flash-coding-plan-v1",
+      "model": "glm-5.3-flash",
+      "base_url": "https://open.bigmodel.cn/api/coding/paas/v4",
+      "endpoint_mode": "coding_plan",
+      "temperature": 1,
+      "top_p": 0.95,
+      "reasoning_effort": "max",
+      "thinking": {
+        "type": "enabled",
+        "clear_thinking": false
+      },
+      "max_tokens_parameter": "max_tokens",
+      "tool_stream": true
+    }
+  },
+  "gates": {
+    "actual_input_reduction": 0.25,
+    "ordinary_p95_max_ratio": 1.15,
+    "success_rate_min_difference": 0,
+    "critical_failures_max": 0,
+    "require_positive_reduction_ci": true,
+    "objective": "prompt_cache",
+    "billing_claim_requires_currency": true,
+    "actual_total_token_reduction": 0.15
+  },
+  "pricing": {
+    "currency": null,
+    "source": "https://docs.bigmodel.cn/cn/coding-plan/overview",
+    "verified_at": null,
+    "verified": false,
+    "note": "Coding Plan 实际 token、积分及费用未知；不套用标准按量费率，不以功能预检代替成本收益验收。"
+  },
+  "limits": [
+    "不验证外部检索排序、真实支付物流或浏览器渲染",
+    "生产工厂工作流使用合成目录、本地 SQLite；知识检索与长期记忆提炼由独立契约测试覆盖",
+    "CP 不能以输入 token 降幅证明收益，独立启用需完整计费证明",
+    "GLM Coding Plan 文本功能评测；标准 OpenAI 兼容直连，不伪装客户端或 headers；服务端拒绝即停止，功能通过不代表费用收益通过。"
+  ],
+  "experiment_version": "bigmodel-glm-5.3-flash-coding-plan-stable-prefix-v1",
+  "scorer_version": "sku-quotes-v1.4-typed-scope"
+}

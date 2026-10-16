@@ -14,8 +14,13 @@ on:
         default: false
       profile:
         type: choice
-        options: [preflight, smoke, dev, release]
-        default: smoke
+        options: [config-check, preflight, smoke, dev, release]
+        default: config-check
+      endpoint_mode:
+        description: '显式选择 standard 标准 API 或 coding_plan 套餐端点；不自动切换'
+        type: choice
+        options: [standard, coding_plan]
+        default: standard
 
 permissions:
   contents: read
@@ -25,8 +30,27 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  configuration:
+    name: No-model configuration check
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Classify configuration without model calls
+        env:
+          LLM_BASE_URL: ${{ secrets.HARNESS_LLM_BASE_URL }}
+          LLM_MODEL: ${{ vars.HARNESS_LLM_MODEL }}
+          HARNESS_KEY_CONFIGURED: ${{ secrets.HARNESS_LLM_API_KEY != '' }}
+          ENDPOINT_MODE: ${{ inputs.endpoint_mode || 'standard' }}
+          PROFILE: ${{ inputs.profile }}
+        run: python3 -m scripts.eval.endpoint_config --endpoint-mode "$ENDPOINT_MODE" --profile "$PROFILE"
+
   changes:
     name: Detect model evaluation scope
+    if: github.event_name != 'workflow_dispatch' || inputs.profile != 'config-check'
     runs-on: ubuntu-latest
     outputs:
       model: ${{ steps.scope.outputs.model }}
@@ -46,6 +70,7 @@ jobs:
 
   safety-contracts:
     name: Offline safety contracts
+    if: github.event_name != 'workflow_dispatch' || inputs.profile != 'config-check'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
@@ -93,14 +118,15 @@ jobs:
 
   model-evaluation:
     name: Real model evaluation
-    needs: [changes, safety-contracts]
-    if: needs.changes.outputs.model == 'true' && github.event_name == 'workflow_dispatch' && inputs.approve_model_budget
+    needs: [changes, safety-contracts, configuration]
+    if: needs.changes.outputs.model == 'true' && github.event_name == 'workflow_dispatch' && inputs.profile != 'config-check' && inputs.approve_model_budget
     runs-on: ubuntu-latest
     timeout-minutes: 180
     env:
       LLM_BASE_URL: ${{ secrets.HARNESS_LLM_BASE_URL }}
       LLM_API_KEY: ${{ secrets.HARNESS_LLM_API_KEY }}
       LLM_MODEL: ${{ vars.HARNESS_LLM_MODEL }}
+      ENDPOINT_MODE: ${{ inputs.endpoint_mode || 'standard' }}
       LLM_FALLBACK_MODEL: ''
       REDIS_URL: ''
       LANGFUSE_SECRET_KEY: ''
@@ -125,7 +151,11 @@ jobs:
         run: |
           suite_args=()
           if [ "$LLM_MODEL" = glm-5.3-flash ]; then
-            suite_args+=(--suite eval/harness/v1/glm-5.3-flash-suite.json)
+            case "$ENDPOINT_MODE" in
+              standard) suite_args+=(--suite eval/harness/v1/glm-5.3-flash-suite.json) ;;
+              coding_plan) suite_args+=(--suite eval/harness/v1/glm-5.3-flash-coding-plan-suite.json) ;;
+              *) exit 2 ;;
+            esac
           fi
           uv run python -m scripts.model_preflight "${suite_args[@]}" --output eval/verification/ci-preflight
       - name: Real model evaluation
@@ -135,7 +165,11 @@ jobs:
         run: |
           suite_args=()
           if [ "$LLM_MODEL" = glm-5.3-flash ]; then
-            suite_args+=(--suite eval/harness/v1/glm-5.3-flash-suite.json)
+            case "$ENDPOINT_MODE" in
+              standard) suite_args+=(--suite eval/harness/v1/glm-5.3-flash-suite.json) ;;
+              coding_plan) suite_args+=(--suite eval/harness/v1/glm-5.3-flash-coding-plan-suite.json) ;;
+              *) exit 2 ;;
+            esac
           fi
           if [ "$HARNESS_PROFILE" = release ]; then
             uv run python -m scripts.eval.harness run "${suite_args[@]}" --profile release --output eval/verification/ci-model --require-benefit

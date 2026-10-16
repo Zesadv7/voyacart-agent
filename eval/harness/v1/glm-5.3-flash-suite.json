@@ -182,6 +182,7 @@
       "adapter": "bigmodel-glm-5.3-flash-v1",
       "model": "glm-5.3-flash",
       "base_url": "https://open.bigmodel.cn/api/paas/v4",
+      "endpoint_mode": "standard",
       "temperature": 1,
       "top_p": 0.95,
       "reasoning_effort": "max",

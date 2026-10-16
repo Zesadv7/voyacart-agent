@@ -212,6 +212,9 @@ async def run_profile(profile, output, *, suite_path=None, strategies=None, case
                     write_json(output/'rows'/f'{case_id}-{strategy}-{repetition}.json',row)
                     checkpoint()
                     print(json.dumps({**identity,'passed':row['passed'],'error':row.get('error')},ensure_ascii=False),flush=True)
+                    if budget and budget.provider_rejected:
+                        manifest['status']='failed';manifest['error']='provider_rejected'
+                        return checkpoint()
                     if budget and budget.exhausted:
                         manifest['status']='failed';manifest['error']='model_call_limit_exceeded'
                         return checkpoint()
