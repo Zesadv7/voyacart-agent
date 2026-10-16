@@ -166,6 +166,8 @@
     "tests/test_context_efficiency.py",
     "tests/test_model_protocol.py",
     "tests/test_visible_evidence.py",
+    "tests/test_historical_ordinal_binding.py",
+    "tests/test_reference_regression.py",
     "tests/test_skill_catalog.py",
     "tests/test_buyer_workspace.py",
     "tests/test_capability_registry.py",

@@ -26,8 +26,8 @@ class ResponseContract:
                 'wrong_forced_tool' if self.forced and any(n != self.forced for n in names) else
                 'required_tool_missing' if self.required and not names else None)
         self.observe(protocol_status=code or 'valid')
-        # 结构化生成仍可由 SDK 回退解析文本；明确的商品重新核验缺少工具时不能视为完成。
-        if code and (code != 'required_tool_missing' or self.forced == 'product_search_tool'):
+        # 结构化生成仍可由 SDK 回退解析文本；强制只读取证缺少工具时不能视为完成。
+        if code and (code != 'required_tool_missing' or self.forced in {'product_search_tool', 'conversation_fact_lookup'}):
             raise ModelProtocolViolation(code)
 
     def completion(self, response):
@@ -39,6 +39,12 @@ class ResponseContract:
         names = [c.function.name for choice in response.choices
                  for c in (value(choice.message, 'tool_calls') or [])]
         self.validate(names)
+        if self.forced == 'conversation_fact_lookup':
+            # 强制取证前的可见正文尚无证据支持；仅保留调用及原生推理/计量字段。
+            # 不修改上游响应对象，也不影响普通 auto/none 或结构化输出。
+            response = response.model_copy(deep=True)
+            for choice in response.choices:
+                choice.message.content = None
         return response
 
 

@@ -385,17 +385,24 @@ class LayeredContextMiddleware(MiddlewareBase):
                 input_kwargs = {**input_kwargs, 'inputs': [*rows, hint]}
             record_context_diagnostic({'type': 'state', 'mode': self.state_mode,
                 'emitted': hint is not None, 'estimated_tokens': token_estimate(hint.get_text_content()) if hint else 0})
-        from app.application.tools.conversation_fact_lookup import lookup_batch_scope, explicit_lookup_batch
+        from app.application.tools.conversation_fact_lookup import lookup_batch_scope, lookup_ordinal_scope, explicit_lookup_batch
+        from app.infrastructure.visible_evidence import historical_ordinal_identity
         buyers = [m for m in rows if ctx and getattr(m, 'name', None) == ctx.buyer_id
                   and getattr(m, 'role', None) == 'user']
         scope_token = None
+        ordinal = None
         if buyers:
             text = next((b.text for b in buyers[-1].get_content_blocks() if isinstance(b, TextBlock)), '')
             batch = explicit_lookup_batch(text)
             scope_token = lookup_batch_scope.set((ctx.buyer_id, ctx.shopping_session_id, batch) if batch else None)
+            selection = historical_ordinal_identity(text)
+            if selection:
+                ordinal = (ctx.buyer_id, ctx.shopping_session_id, {**selection, 'source_message_id': buyers[-1].id})
+        ordinal_token = lookup_ordinal_scope.set(ordinal)
         try:
             async for event in next_handler(**input_kwargs): yield event
         finally:
+            lookup_ordinal_scope.reset(ordinal_token)
             if scope_token is not None:
                 lookup_batch_scope.reset(scope_token)
 
@@ -437,7 +444,8 @@ class LayeredContextMiddleware(MiddlewareBase):
         messages = input_kwargs.get('messages', [])
         candidates = [(b.id, hashlib.sha256(str(b.output).encode()).hexdigest()) for _, b in blocks(messages)]
         messages = share_identical_products(messages, compact_rules=self.compact_result_rules)
-        from app.infrastructure.visible_evidence import visible_answer_request, explicit_current_product_choice
+        from app.infrastructure.visible_evidence import (
+            visible_answer_request, explicit_current_product_choice, historical_ordinal_identity_request)
         focused = await visible_answer_request(agent, messages, self.store,
             preserve_prefix=self.prompt_layout == 'stable_prefix', tools=input_kwargs.get('tools'))
         overrides = {}
@@ -446,11 +454,18 @@ class LayeredContextMiddleware(MiddlewareBase):
             messages = focused['messages']
             overrides = {'tools': focused['tools'], 'tool_choice': focused['tool_choice']}
         else:
-            fresh_choice = explicit_current_product_choice(agent, messages, input_kwargs.get('tools'),
+            ordinal = historical_ordinal_identity_request(agent, messages, input_kwargs.get('tools'),
                                                           input_kwargs.get('tool_choice'))
-            if fresh_choice is not None:
-                overrides['tool_choice'] = fresh_choice
-                record_context_diagnostic({'type': 'fresh_product', 'reason': 'explicit_current_recheck'})
+            if ordinal:
+                messages = ordinal['messages']
+                overrides['tool_choice'] = ordinal['tool_choice']
+                record_context_diagnostic(ordinal['diagnostic'])
+            else:
+                fresh_choice = explicit_current_product_choice(agent, messages, input_kwargs.get('tools'),
+                                                              input_kwargs.get('tool_choice'))
+                if fresh_choice is not None:
+                    overrides['tool_choice'] = fresh_choice
+                    record_context_diagnostic({'type': 'fresh_product', 'reason': 'explicit_current_recheck'})
         actual_tools = overrides.get('tools', input_kwargs.get('tools'))
         target, available = self.limits(agent)
         estimated = await self.count(agent, messages, actual_tools)

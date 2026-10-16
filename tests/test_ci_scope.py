@@ -23,6 +23,16 @@ def test_docs_do_not_spend_model_budget():
     assert not any(classify(["README.md", "docs/改动记录/2026-10-16/M1.md"]).values())
 
 
+@pytest.mark.parametrize('path', ['tests/test_historical_ordinal_binding.py', 'tests/test_reference_regression.py'])
+def test_historical_ordinal_guard_is_in_safety_suites_and_model_impact(path):
+    from pathlib import Path
+    import json
+    assert classify([path])['model']
+    for name in ('suite.json', 'glm-5.3-flash-suite.json', 'glm-5.3-flash-coding-plan-suite.json'):
+        suite = json.loads((Path('eval/harness/v1') / name).read_text())
+        assert suite['contract_tests'].count(path) == 1
+
+
 def test_ci_changes_and_manual_run_cover_every_offline_layer():
     for path in (".github/workflows/offline-ci.yml", "scripts/ci/scope.py", "Makefile"):
         assert all(classify([path])[layer] for layer in ("backend", "frontend", "compose"))

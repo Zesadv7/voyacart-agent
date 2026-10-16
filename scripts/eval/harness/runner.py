@@ -116,8 +116,8 @@ async def run_profile(profile, output, *, suite_path=None, strategies=None, case
         raise ValueError('策略需包含 current 且不得重复/未知')
     ids=case_ids or selected['cases']
     if len(ids)!=len(set(ids)) or set(ids)-{c['id'] for c in suite['_cases']}:raise ValueError('场景未知或重复')
-    # 人工选场景属于诊断，不能伪装为完整 smoke/release。
-    actual_profile='diagnostic' if case_ids or skip_contracts else profile
+    # 人工选场景与已见历史引用回归均属于诊断，不能伪装为完整 smoke/release。
+    actual_profile='diagnostic' if case_ids or skip_contracts or profile == 'reference_diagnostic' else profile
     output=assert_output_path(output);output.mkdir(parents=True)
     (output/'rows').mkdir();(output/'attempts.jsonl').touch();(output/'contracts.log').touch()
     (output/'traces').mkdir()

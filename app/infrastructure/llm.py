@@ -220,7 +220,7 @@ class StreamClosingOpenAIChatModel(OpenAIChatModel):
             estimate = await count_model_input(self, messages, tools)
             if estimate['estimated_input_tokens'] > input_limits(self, output)['input_budget']:
                 raise ContextCapacityError('所选模型的安全输入空间不足，请整理上下文或选择更大窗口；未发送模型请求')
-        if self.stream and getattr(tool_choice, 'mode', None) == 'product_search_tool':
+        if self.stream and getattr(tool_choice, 'mode', None) in {'product_search_tool', 'conversation_fact_lookup'}:
             # 兼容网关的强制函数参数流可能缺少完整结束标记；该只读取证使用完整响应。
             # 请求局部副本保留原生解析、配额和计量，不切换模型、不重试，也不改共享流式配置。
             request_model = copy(self)

@@ -45,7 +45,8 @@ WATCHED = ('app/application/agents/', 'app/application/harness/', 'app/applicati
            'tests/test_catalog_identity', 'tests/test_catalog_provenance_public', 'tests/test_vector_catalog_identity',
            'tests/test_esci_pairing', 'eval/esci/', 'eval/esci-v2/', 'eval/harness/esci-v2/', 'data/catalog-',
            'scripts/eval/', 'scripts/model_preflight.py', 'eval/harness/v1/', 'eval/harness/esci-v1/', 'tests/test_esci_harness', 'tests/test_harness', 'tests/test_context',
-           'tests/test_model_protocol', 'tests/test_visible_evidence',
+           'tests/test_model_protocol', 'tests/test_visible_evidence', 'tests/test_historical_ordinal_binding',
+           'tests/test_reference_regression',
            'tests/test_layered', 'tests/test_prompt_cache', 'tests/test_native_memory', 'pyproject.toml', 'uv.lock',
            'Makefile', '.github/workflows/harness-eval.yml', 'data/catalog-v1.jsonl')
 

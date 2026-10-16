@@ -7,12 +7,13 @@ from copy import deepcopy
 from agentscope.message import TextBlock, ToolResultState
 from agentscope.tool import ToolChunk
 from app.infrastructure.context import ShoppingContext
-from app.infrastructure.context_products import product_page, token_estimate, normalize_lookup_fields
+from app.infrastructure.context_products import product_page, token_estimate, normalize_lookup_fields, field_selection, FIELD_GROUPS
 from app.infrastructure.context_usage import record_context_diagnostic, record_evaluation_evidence
 
 
 # 只在当前原生 reply 调用链生效；并发买家、下一轮和进程重启不会继承。
 lookup_batch_scope = ContextVar('voyacart_lookup_batch_scope', default=None)
+lookup_ordinal_scope = ContextVar('voyacart_lookup_ordinal_scope', default=None)
 
 
 def explicit_lookup_batch(text):
@@ -83,13 +84,41 @@ def build_conversation_fact_lookup(store, *, mode='strict'):
                 raise ValueError('缺少会话身份')
             if batch < 0:
                 raise ValueError('批次不得小于0')
-            inferred = False
-            scope = lookup_batch_scope.get()
-            if not result_ref and batch == 0 and scope and scope[:2] == (ctx.buyer_id, ctx.shopping_session_id):
-                batch = scope[2]
-                inferred = True
-            diagnostic.update(effective_batch=batch, batch_inferred_from_user=inferred)
-            if result_ref:
+            inferred, position_inferred, ordinal_bound = False, False, False
+            ordinal = lookup_ordinal_scope.get()
+            if ordinal and ordinal[:2] == (ctx.buyer_id, ctx.shopping_session_id):
+                selection = ordinal[2]
+                if batch not in (0, selection['batch']) or position not in (0, selection['position']):
+                    raise ValueError('批次或序号与本轮买家明确指定的历史商品不一致')
+                if fields != 'all' and not field_selection(fields) <= FIELD_GROUPS['identity']:
+                    raise ValueError('本轮历史商品序号查询仅请求 identity 身份字段')
+                if offset != 0:
+                    raise ValueError('本轮历史商品序号查询不接受额外商品分页偏移')
+                item = await store.batch(ctx.buyer_id, ctx.shopping_session_id, selection['batch'])
+                if result_ref and (not item or result_ref not in {item['result_ref'], item['data'].get('result_ref')}):
+                    raise ValueError('证据引用与本轮买家明确指定的历史批次不一致')
+                hits = item['data'].get('hits', []) if item else []
+                target = hits[selection['position']-1] if selection['position'] <= len(hits) else {}
+                sku_ids = {target.get('sku_id'), target.get('default_sku_id')} | {
+                    sku.get('sku_id') for sku in target.get('skus', [])}
+                if (product_id and product_id != target.get('product_id')) or (sku_id and sku_id not in sku_ids):
+                    raise ValueError('商品或规格筛选与本轮买家明确指定的历史商品不一致')
+                inferred, position_inferred, ordinal_bound = batch == 0, position == 0, True
+                batch, position = selection['batch'], selection['position']
+                if fields == 'all':
+                    fields = 'identity'
+            else:
+                scope = lookup_batch_scope.get()
+                if not result_ref and batch == 0 and scope and scope[:2] == (ctx.buyer_id, ctx.shopping_session_id):
+                    batch = scope[2]
+                    inferred = True
+            diagnostic.update(effective_batch=batch, batch_inferred_from_user=inferred,
+                              effective_position=position, position_inferred_from_user=position_inferred,
+                              ordinal_bound_from_user=ordinal_bound, fields_normalized=fields != requested_fields)
+            if ordinal_bound:
+                # 即使引用指向同批原始搜索，序号仍以买家实际展示记录为准。
+                records = [item] if item else []
+            elif result_ref:
                 item = await store.get(ctx.buyer_id, ctx.shopping_session_id, result_ref)
                 records = [item] if item else []
             elif batch:
@@ -114,7 +143,9 @@ def build_conversation_fact_lookup(store, *, mode='strict'):
                         position=position, fields=fields, field_offset=field_offset, token_limit=2700)
                     record['observation_scope'] = {'time_basis': 'historical',
                         'requested_batch': request_arguments['batch'] or None, 'effective_batch': batch or None,
-                        'batch_inferred_from_user': inferred, 'requested_position': position or None,
+                        'batch_inferred_from_user': inferred, 'requested_position': request_arguments['position'] or None,
+                        'effective_position': position or None, 'position_inferred_from_user': position_inferred,
+                        'ordinal_bound_from_user': ordinal_bound,
                         'notice': '以下 SKU 单价和库存均为该次历史观察，绝非当前值；不得与当前业务工具的数值互换。'}
                 else:
                     data = record['data']
@@ -152,7 +183,8 @@ def build_conversation_fact_lookup(store, *, mode='strict'):
                 has_more=any(r['data'].get('next_offset') is not None or r['data'].get('next_field_offset') is not None for r in records))
             record_evaluation_evidence('lookup_result', {'tool': 'conversation_fact_lookup',
                 'arguments': request_arguments, 'effective_batch': batch, 'batch_inferred_from_user': inferred,
-                'effective_fields': fields, 'effective_limit': limit,
+                'effective_fields': fields, 'effective_limit': limit, 'effective_position': position,
+                'ordinal_bound_from_user': ordinal_bound,
                 'state': 'success', 'result': payload})
             return ToolChunk(content=[TextBlock(text=json.dumps(payload, ensure_ascii=False))], state=ToolResultState.SUCCESS)
         except ValueError as error:

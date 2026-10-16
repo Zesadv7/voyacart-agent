@@ -13,8 +13,9 @@ on:
         type: boolean
         default: false
       profile:
+        description: 'reference-smoke: 已见 snapshot 末轮诊断48 + preflight8 + 完整smoke150，总上限206，不跑完整留出'
         type: choice
-        options: [config-check, preflight, smoke, dev, release, full-functional]
+        options: [config-check, preflight, smoke, dev, release, full-functional, reference-smoke]
         default: config-check
       endpoint_mode:
         description: '显式选择 standard 标准 API 或 coding_plan 套餐端点；不自动切换'
@@ -161,10 +162,28 @@ jobs:
             esac
           fi
           uv run python -m scripts.model_preflight "${suite_args[@]}" --output eval/verification/ci-preflight
+      - name: Bounded seen-reference snapshot diagnostic
+        if: inputs.profile == 'reference-smoke'
+        run: |
+          case "$ENDPOINT_MODE" in
+            standard) suite=eval/harness/v1/glm-5.3-flash-suite.json ;;
+            coding_plan) suite=eval/harness/v1/glm-5.3-flash-coding-plan-suite.json ;;
+            *) exit 2 ;;
+          esac
+          uv run python -m scripts.eval.harness run --suite "$suite" --profile reference_diagnostic --output eval/verification/ci-reference
+      - name: Validate diagnostic before complete smoke
+        if: inputs.profile == 'reference-smoke'
+        run: |
+          case "$ENDPOINT_MODE" in
+            standard) suite=eval/harness/v1/glm-5.3-flash-suite.json ;;
+            coding_plan) suite=eval/harness/v1/glm-5.3-flash-coding-plan-suite.json ;;
+            *) exit 2 ;;
+          esac
+          uv run python -m scripts.eval.harness.reference_regression --suite "$suite" --preflight eval/verification/ci-preflight --diagnostic eval/verification/ci-reference --output eval/verification/reference-diagnostic-gate.json
       - name: Real model evaluation
         if: inputs.profile != 'preflight'
         env:
-          HARNESS_PROFILE: ${{ inputs.profile == 'full-functional' && 'dev' || inputs.profile || 'smoke' }}
+          HARNESS_PROFILE: ${{ inputs.profile == 'full-functional' && 'dev' || inputs.profile == 'reference-smoke' && 'smoke' || inputs.profile || 'smoke' }}
         run: |
           suite_args=()
           if [ "$LLM_MODEL" = glm-5.3-flash ]; then
@@ -189,6 +208,15 @@ jobs:
             *) exit 2 ;;
           esac
           uv run python -m scripts.eval.harness.functional --suite "$suite" --prior eval/verification --output eval/verification/full-functional-dev.json
+      - name: Summarize bounded reference and smoke evidence
+        if: always() && inputs.profile == 'reference-smoke'
+        run: |
+          case "$ENDPOINT_MODE" in
+            standard) suite=eval/harness/v1/glm-5.3-flash-suite.json ;;
+            coding_plan) suite=eval/harness/v1/glm-5.3-flash-coding-plan-suite.json ;;
+            *) exit 2 ;;
+          esac
+          uv run python -m scripts.eval.harness.reference_regression --suite "$suite" --preflight eval/verification/ci-preflight --diagnostic eval/verification/ci-reference --smoke eval/verification/ci-model --output eval/verification/reference-smoke-summary.json
       - name: Preserve HTML and raw failures
         if: always()
         uses: actions/upload-artifact@v4
@@ -197,6 +225,9 @@ jobs:
           path: |
             eval/verification/ci-model
             eval/verification/ci-preflight
+            eval/verification/ci-reference
+            eval/verification/reference-diagnostic-gate.json
+            eval/verification/reference-smoke-summary.json
             eval/verification/full-functional-dev.json
           retention-days: 30
 

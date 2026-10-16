@@ -110,6 +110,16 @@
       ],
       "purpose": "参数冻结后留出验收，不自动发布",
       "max_model_calls": 3000
+    },
+    "reference_diagnostic": {
+      "repetitions": 2,
+      "cases": [
+        "h1-hold-first",
+        "h1-hold-last",
+        "h1-dev-second"
+      ],
+      "purpose": "已见留出与开发历史序号回归诊断；snapshot 本地构造历史，仅末轮调用模型，不等价 long 真实 24 轮回归，不是新留出、不替代完整 smoke/release；48 为诊断总物理调用硬上限，不保证每实例预算足够。",
+      "max_model_calls": 48
     }
   },
   "contract_tests": [
@@ -133,6 +143,8 @@
     "tests/test_context_efficiency.py",
     "tests/test_model_protocol.py",
     "tests/test_visible_evidence.py",
+    "tests/test_historical_ordinal_binding.py",
+    "tests/test_reference_regression.py",
     "tests/test_skill_catalog.py",
     "tests/test_buyer_workspace.py",
     "tests/test_capability_registry.py",

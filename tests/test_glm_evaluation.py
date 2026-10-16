@@ -389,3 +389,174 @@ def test_full_functional_profile_has_exact_existing_matrix_and_budget():
     env.update(LLM_MODEL='other',LLM_BASE_URL='https://example.invalid/v1')
     assert not inspect_configuration(env,'standard','full-functional')['configuration_matches']
     assert inspect_configuration(env,'standard','smoke')['configuration_matches']
+
+
+@pytest.mark.parametrize('suite_path', [SUITE, CODING_SUITE])
+def test_reference_diagnostic_is_bounded_seen_snapshot_not_new_holdout(suite_path):
+    suite = load_suite(suite_path)
+    profile = suite['profiles']['reference_diagnostic']
+    assert profile['cases'] == ['h1-hold-first', 'h1-hold-last', 'h1-dev-second']
+    assert profile['repetitions'] == 2 and profile['max_model_calls'] == 48
+    assert len(profile['cases']) * profile['repetitions'] * 2 == 12
+    cases = {case['id']: case for case in suite['_cases']}
+    assert all(cases[case]['mode'] == 'snapshot' for case in profile['cases'])
+    assert [cases[case]['split'] for case in profile['cases']] == ['holdout', 'holdout', 'dev']
+    assert all(word in profile['purpose'] for word in ('已见', 'snapshot', '仅末轮', '不是新留出', '硬上限'))
+    assert suite['runtime']['model_retries'] == 0
+    assert 8 + profile['max_model_calls'] + suite['profiles']['smoke']['max_model_calls'] == 206
+    # 既有完整档位的场景及重复数不变；新增诊断不能缩减完整 smoke/release。
+    original = load_suite()
+    for name in ('smoke', 'dev', 'release'):
+        assert suite['profiles'][name]['cases'] == original['profiles'][name]['cases']
+        assert suite['profiles'][name]['repetitions'] == original['profiles'][name]['repetitions']
+    assert 'reference_diagnostic' not in original['profiles']
+
+
+@pytest.mark.parametrize('mode,url', [('standard', GLM_BASE_URL), ('coding_plan', GLM_CODING_URL)])
+def test_reference_smoke_configuration_requires_explicit_glm_endpoint(mode, url):
+    from scripts.eval.endpoint_config import inspect_configuration
+    env = {'LLM_BASE_URL': url, 'LLM_MODEL': GLM_MODEL, 'HARNESS_KEY_CONFIGURED': 'true'}
+    assert inspect_configuration(env, mode, 'reference-smoke')['configuration_matches']
+    other_mode = 'coding_plan' if mode == 'standard' else 'standard'
+    assert not inspect_configuration(env, other_mode, 'reference-smoke')['configuration_matches']
+    env.update(LLM_MODEL='other', LLM_BASE_URL='https://example.invalid/v1')
+    result = inspect_configuration(env, 'standard', 'reference-smoke')
+    assert not result['configuration_matches'] and not result['other_provider_unchanged']
+    assert result['model_calls'] == 0
+
+
+def test_reference_smoke_workflow_runs_same_job_fail_closed_and_retains_all_evidence():
+    import yaml
+    workflow = yaml.safe_load((ROOT / '.github/workflows/harness-eval.yml').read_text())
+    inputs = workflow.get('on', workflow.get(True))['workflow_dispatch']['inputs']
+    assert 'reference-smoke' in inputs['profile']['options']
+    assert inputs['profile']['default'] == 'config-check'
+    assert inputs['approve_model_budget']['default'] is False
+    assert workflow['permissions'] == {'contents': 'read'}
+    job = workflow['jobs']['model-evaluation']
+    assert 'workflow_dispatch' in job['if'] and 'inputs.approve_model_budget' in job['if']
+    assert job['env']['LLM_FALLBACK_MODEL'] == '' and job['env']['REDIS_URL'] == ''
+    steps = job['steps']
+    by_name = {step.get('name'): step for step in steps}
+    order = [step.get('name') for step in steps]
+    phases = ['Model identity and tool round-trip preflight', 'Bounded seen-reference snapshot diagnostic',
+              'Validate diagnostic before complete smoke', 'Real model evaluation',
+              'Summarize bounded reference and smoke evidence', 'Preserve HTML and raw failures']
+    assert [order.index(name) for name in phases] == sorted(order.index(name) for name in phases)
+    preflight, diagnostic, gate, smoke, final, artifact = [by_name[name] for name in phases]
+    assert sum('scripts.model_preflight' in step.get('run', '') for step in steps) == 1
+    assert sum(step.get('uses', '').startswith('actions/checkout@') for step in steps) == 1
+    assert not any(step.get('uses', '').startswith('actions/download-artifact@') for step in steps)
+    assert '--profile reference_diagnostic' in diagnostic['run']
+    assert 'scripts.eval.harness.reference_regression' in gate['run']
+    assert '--smoke' not in gate['run'] and 'reference-diagnostic-gate.json' in gate['run']
+    assert "inputs.profile == 'reference-smoke' && 'smoke'" in smoke['env']['HARNESS_PROFILE']
+    assert "inputs.profile == 'full-functional' && 'dev'" in smoke['env']['HARNESS_PROFILE']
+    assert '--profile release --output eval/verification/ci-model --require-benefit' in smoke['run']
+    assert 'scripts.eval.harness verify eval/verification/ci-model' in smoke['run']
+    for phase in (diagnostic, gate, smoke):
+        assert not phase.get('continue-on-error') and 'always()' not in phase['if']
+        assert '--skip-contracts' not in phase['run'] and '--case ' not in phase['run']
+    assert "always() && inputs.profile == 'reference-smoke'" == final['if']
+    assert '--smoke eval/verification/ci-model' in final['run']
+    assert 'reference-smoke-summary.json' in final['run']
+    assert artifact['if'] == 'always()'
+    for path in ('ci-preflight', 'ci-reference', 'ci-model', 'reference-diagnostic-gate.json',
+                 'reference-smoke-summary.json'):
+        assert 'eval/verification/' + path in artifact['with']['path']
+    assert "inputs.profile == 'full-functional'" in workflow['jobs']['full-functional-holdout']['if']
+    assert 'reference-smoke' not in workflow['jobs']['full-functional-holdout']['if']
+    assert by_name['Install Redis for model-run safety contracts']['if'] == "inputs.profile != 'preflight'"
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('suite_path', [SUITE, CODING_SUITE])
+async def test_reference_runner_records_diagnostic_and_cannot_verify_as_smoke(tmp_path, monkeypatch, suite_path):
+    from scripts.eval.harness import runner
+    from scripts.eval.harness.__main__ import verify_run
+    suite = load_suite(suite_path)
+    config = suite['runtime']['model_config']
+    configured = replace(settings(tmp_path), llm_model=GLM_MODEL, llm_base_url=config['base_url'],
+                         prompt_cache_mode='passthrough', llm_fallback_model='must-be-cleared', llm_max_retries=9)
+    monkeypatch.setattr('app.infrastructure.settings.load_settings', lambda **kwargs: configured)
+    contract_calls = []
+    async def contracts(selected, output):
+        contract_calls.append(selected['contract_tests'])
+        return {'passed': True, 'passed_count': 1}
+    async def execute(case, strategy, repetition, settings, suite, work, throttle, collect):
+        assert settings.llm_fallback_model == '' and settings.llm_max_retries == 0
+        budget = model_call_budget.get()
+        assert budget.limit == 48
+        budget.reserve()
+        sample = {'kind': 'business', 'input_tokens': None, 'output_tokens': None, 'elapsed_ms': 1,
+                  'prompt_cache': {'model': GLM_MODEL, 'response_model': GLM_MODEL,
+                                   'response_model_matches': True, 'protocol_status': 'valid'}}
+        collect(sample)
+        return {'case_id': case['id'], 'strategy': strategy, 'repetition': repetition,
+                'layer': case['layer'], 'mode': case['mode'], 'passed': True, 'error': None,
+                'checks': {'synthetic': True}, 'usage': [sample], 'elapsed_ms': 1,
+                'round_metrics': [{'elapsed_ms': 1, 'compacted': False}]}
+    monkeypatch.setattr(runner, 'contract_checks', contracts)
+    monkeypatch.setattr(runner, 'execute_case', execute)
+    output = tmp_path / 'reference'
+    result = await runner.run_profile('reference_diagnostic', output, suite_path=suite_path)
+    saved = json.loads((output / 'manifest.json').read_text())
+    assert len(contract_calls) == 1
+    assert saved['profile'] == 'diagnostic' and saved['requested_profile'] == 'reference_diagnostic'
+    assert saved['physical_call_limit'] == 48 and saved['physical_calls_started'] == 12
+    assert saved['status'] == 'completed' and saved['contracts']['passed']
+    assert result['matrix_complete'] and result['failure_count'] == 0
+    assert len(json.loads((output / 'results.json').read_text())) == 12
+    assert len((output / 'attempts.jsonl').read_text().splitlines()) == 12
+    for minimum in ('smoke', 'release'):
+        verification = verify_run(output, minimum)
+        assert not verification['passed']
+        assert any('诊断不能替代完整评测' in reason for reason in verification['reasons'])
+
+
+def test_harness_cli_accepts_named_reference_diagnostic_only(tmp_path, monkeypatch):
+    import sys
+    from scripts.eval.harness import __main__ as harness
+    output = tmp_path / 'cli-reference'
+    seen = []
+    async def run(profile, path, **kwargs):
+        seen.append((profile, kwargs))
+        path.mkdir()
+        (path / 'manifest.json').write_text(json.dumps({'status': 'completed', 'source_stable': True}))
+        return {'matrix_complete': True, 'failure_count': 0}
+    monkeypatch.setattr(harness, 'run_profile', run)
+    monkeypatch.setattr(sys, 'argv', ['harness', 'run', '--profile', 'reference_diagnostic',
+                                   '--suite', str(CODING_SUITE), '--output', str(output)])
+    assert harness.main() == 0
+    assert seen[0][0] == 'reference_diagnostic' and seen[0][1]['suite_path'] == CODING_SUITE
+    assert seen[0][1]['skip_contracts'] is False and seen[0][1]['case_ids'] is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('failure', ['contracts', 'budget'])
+async def test_reference_diagnostic_stops_on_contract_failure_or_48_call_limit(tmp_path, monkeypatch, failure):
+    from scripts.eval.harness import runner
+    configured = replace(settings(tmp_path), llm_model=GLM_MODEL, llm_base_url=GLM_CODING_URL,
+                         prompt_cache_mode='passthrough')
+    monkeypatch.setattr('app.infrastructure.settings.load_settings', lambda **kwargs: configured)
+    async def contracts(*args):
+        return {'passed': failure != 'contracts', 'passed_count': int(failure != 'contracts')}
+    called = []
+    async def execute(*args):
+        called.append(True)
+        budget = model_call_budget.get()
+        for _ in range(49):
+            budget.reserve()
+        pytest.fail('49th physical call must not start')
+    monkeypatch.setattr(runner, 'contract_checks', contracts)
+    monkeypatch.setattr(runner, 'execute_case', execute)
+    output = tmp_path / failure
+    await runner.run_profile('reference_diagnostic', output, suite_path=CODING_SUITE)
+    saved = json.loads((output / 'manifest.json').read_text())
+    assert saved['profile'] == 'diagnostic' and saved['status'] == 'failed'
+    assert saved['physical_call_limit'] == 48
+    assert saved['physical_calls_started'] == (0 if failure == 'contracts' else 48)
+    assert saved['error'] == ('contract_checks_failed' if failure == 'contracts' else 'model_call_limit_exceeded')
+    assert len(called) == (0 if failure == 'contracts' else 1)
+    assert (output / 'report.html').is_file() and (output / 'attempts.jsonl').is_file()
+    assert model_call_budget.get() is None

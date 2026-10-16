@@ -8,6 +8,112 @@ from agentscope.tool import ToolChoice
 from app.infrastructure.context import ShoppingContext
 
 
+
+def _positive_ordinal(raw):
+    """接受有界阿拉伯数与规范中文序数；口语省略的“一百二”不猜成102或120。"""
+    if raw.isascii() and raw.isdigit():
+        return int(raw) if len(raw) <= 5 and 0 < int(raw) <= 10000 else None
+    if '两十' in raw:
+        return None
+    raw = raw.replace('两', '二').replace('〇', '零')
+    if raw == '一万':
+        return 10000
+    digits = {c: i for i, c in enumerate('零一二三四五六七八九')}
+    total, pending, last_unit = 0, None, 10000
+    for char in raw:
+        if char in digits:
+            if pending not in (None, 0):
+                return None
+            pending = digits[char]
+        elif char in '十百千':
+            unit = {'十': 10, '百': 100, '千': 1000}[char]
+            if unit >= last_unit or pending == 0 or (pending is None and (total or unit != 10)):
+                return None
+            total += (pending or 1) * unit
+            pending, last_unit = None, unit
+        else:
+            return None
+    number = total + (pending or 0)
+    if not 0 < number < 10000:
+        return None
+    # 回编码校验零位，拒绝中文数词的歧义或残缺写法。
+    canonical, skipped = '', False
+    for unit, label in ((1000, '千'), (100, '百'), (10, '十'), (1, '')):
+        digit = number // unit % 10
+        if digit:
+            if skipped:
+                canonical += '零'
+            canonical += '零一二三四五六七八九'[digit] + label
+            skipped = False
+        elif canonical:
+            skipped = True
+    if canonical.startswith('一十'):
+        canonical = canonical[1:]
+    return number if raw == canonical else None
+
+
+def historical_ordinal_identity(text):
+    """只识别单一明确历史批次、商品序号及身份字段；未知、否定和混合意图不介入。"""
+    number = r'([0-9零〇一二三四五六七八九十百千万两]+)'
+    batch_pattern = r'第\s*' + number + r'\s*(?:批|轮)'
+    position_pattern = r'第\s*' + number + r'\s*(?:件|个|款|项)(?:商品|产品)?'
+    batches, positions = re.findall(batch_pattern, text), re.findall(position_pattern, text)
+    if len(batches) != 1 or len(positions) != 1:
+        return None
+    batch, position = _positive_ordinal(batches[0]), _positive_ordinal(positions[0])
+    if batch is None or position is None:
+        return None
+    rest = re.sub(position_pattern, '', re.sub(batch_pattern, '', text)).lower()
+    if not re.search(r'product_id|(?:商品|产品)?id|编号|名称|标题|是什么|是哪|叫什么', rest):
+        return None
+    # 白名单限定为身份提取，不因问题里含 product_id 就吞掉价格、交易或否定指令。
+    words = ('product_id', '商品id', '产品id', 'id', '商品编号', '产品编号', '编号',
+             '商品名称', '产品名称', '名称', '标题', '是什么', '是哪件', '是哪个', '是哪款',
+             '叫什么', '请问', '告诉我', '给出', '列出', '查询', '查看', '回查', '查一下',
+             '历史', '当时', '之前', '展示', '显示', '中的', '对应', '商品', '产品',
+             '请', '问', '只', '的', '中', '是', '和', '与', '及', '什么', '哪件', '哪个', '哪款')
+    rest = re.sub('|'.join(re.escape(w) for w in sorted(words, key=len, reverse=True)), '', rest)
+    if re.fullmatch(r'[\s，。！？、；：,.!?;:（）()「」【】\[\]“”\'"`]*', rest) is None:
+        return None
+    return {'batch': batch, 'position': position, 'fields': 'identity'}
+
+
+def historical_ordinal_identity_request(agent, messages, tools, tool_choice=None):
+    """首次只读取证追加选择说明，工具参数另由 reply 作用域校验；不改原消息或工具表。"""
+    from app.application.tools.conversation_fact_lookup import lookup_ordinal_scope
+    if tool_choice is not None and (getattr(tool_choice, 'mode', None) != 'auto'
+                                   or getattr(tool_choice, 'tools', None) is not None):
+        return None
+    ctx, scope = ShoppingContext.current(), lookup_ordinal_scope.get()
+    if ctx is None or not scope or scope[:2] != (ctx.buyer_id, ctx.shopping_session_id):
+        return None
+    if not any(t.get('function', {}).get('name') == 'conversation_fact_lookup'
+               and {'batch', 'position', 'fields'} <= set(t.get('function', {}).get('parameters', {}).get('properties', {}))
+               for t in tools or [] if isinstance(t, dict)):
+        return None
+    state = getattr(agent, 'state', None)
+    if state is not None and state.has_awaiting_tool_calls(agent.name):
+        return None
+    buyers = [(i, m) for i, m in enumerate(messages) if m.role == 'user' and m.name == ctx.buyer_id]
+    if not buyers:
+        return None
+    boundary, buyer = buyers[-1]
+    selection = scope[2]
+    if buyer.id != selection['source_message_id']:
+        return None
+    # 一次尝试后（包括错误）恢复原生决策，避免强制重试或审批循环。
+    if any(isinstance(b, (ToolCallBlock, ToolResultBlock)) and b.name == 'conversation_fact_lookup'
+           for m in messages[boundary + 1:] for b in m.get_content_blocks()):
+        return None
+    hint = SystemMsg('historical_ordinal_selection',
+        '买家明确查询指定历史展示批次中商品序号的身份。先调用只读 conversation_fact_lookup，'
+        '按以下 batch、position、fields 取证；source_message_id 仅标注买家原消息，不是工具参数。'
+        '不得使用最新批次或其他展示顺序替代。若参数冲突或无结果，说明问题，不猜测身份。\n'
+        + json.dumps(selection, ensure_ascii=False, separators=(',', ':')))
+    return {'messages': [*messages, hint], 'tool_choice': ToolChoice(mode='conversation_fact_lookup'),
+            'diagnostic': {'type': 'historical_ordinal_identity', **selection}}
+
+
 def explicit_current_product_choice(agent, messages, tools, tool_choice=None):
     """落实买家明确的单 SKU 重新核验；用原生工具选择，保留完整工具表和历史。"""
     if tool_choice is not None and (getattr(tool_choice, 'mode', None) != 'auto'

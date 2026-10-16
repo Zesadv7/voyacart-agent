@@ -84,7 +84,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     commands=parser.add_subparsers(dest='command',required=True)
     run=commands.add_parser('run')
-    run.add_argument('--profile',choices=['contracts','smoke','dev','release','cache_probe','efficiency','long_efficiency'],default='smoke')
+    run.add_argument('--profile',choices=['contracts','smoke','dev','release','cache_probe','efficiency','long_efficiency','reference_diagnostic'],default='smoke')
     run.add_argument('--suite',type=Path,default=SUITE)
     run.add_argument('--output',type=Path,required=True)
     run.add_argument('--strategies',default='current,candidate')
