@@ -1,0 +1,4823 @@
+{
+  "queries": {
+    "dev": [
+      {
+        "category": "旅行装备",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "eyemask travel pillow",
+        "query_id": 38982,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "10ft summer waves pool without pump",
+        "query_id": 1567,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "airpod case gucci",
+        "query_id": 7490,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "24 in bathroom vanity without top",
+        "query_id": 2983,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "bath oils for relaxation",
+        "query_id": 13621,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "12 water bottles clear",
+        "query_id": 1901,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "weather theme cutout",
+        "query_id": 110343,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "20 gall fish tank",
+        "query_id": 2775,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "34 cm portable nonstick charcoal bbq",
+        "query_id": 3716,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "otterbox galaxy s9",
+        "query_id": 76442,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "snowflake pillow square white",
+        "query_id": 95462,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "polo ref cologne for men",
+        "query_id": 81963,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "fresh mushrooms",
+        "query_id": 42596,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "12x12 primed canvas",
+        "query_id": 2008,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "small stuffed teddy bear",
+        "query_id": 94922,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "hammocks for outside without stand",
+        "query_id": 48763,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "kids sony headphones girls",
+        "query_id": 58014,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "i life robot vacuum filters",
+        "query_id": 52401,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "no touch lysol soap dispenser",
+        "query_id": 74119,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "dorm refrigerator without freezer",
+        "query_id": 34921,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "laser copy paper for infusible ink",
+        "query_id": 60224,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "germs are not for sharing",
+        "query_id": 45010,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "hot tub test kit",
+        "query_id": 51457,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "turn airpods into wireless",
+        "query_id": 105780,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "wedding fans for guests bulk personalized",
+        "query_id": 110432,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "releev cold sore treatment",
+        "query_id": 86844,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "joule container",
+        "query_id": 56323,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "500 heavyduty clear sheet protector",
+        "query_id": 4670,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "tsum tsum stuffed animal",
+        "query_id": 105577,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "cycling shoes shimano mountain",
+        "query_id": 31183,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "gaming mix amp",
+        "query_id": 44270,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "gray teal beach towel",
+        "query_id": 47215,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "glycolic pads 30%",
+        "query_id": 46146,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "can't believe it's not butter spray",
+        "query_id": 22228,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "full body pregnancy shape wear",
+        "query_id": 43047,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "barnett ghost 360 crossbow",
+        "query_id": 13250,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "airpod charging cable",
+        "query_id": 7508,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "aquis waffle hair towel",
+        "query_id": 10058,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "biotin shampoo",
+        "query_id": 16005,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "ajus sauce",
+        "query_id": 7666,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "baby stuff items clearance",
+        "query_id": 12221,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "hi viz lite pipe kit",
+        "query_id": 50398,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "netdot gen10 micro usb connectors without cords",
+        "query_id": 72970,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "l track massage chair",
+        "query_id": 59273,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "pink hair accessories",
+        "query_id": 80228,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "filter cartridge whirlpool 2",
+        "query_id": 40304,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "litter box dome",
+        "query_id": 62902,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "under armour sunglasses for men pink",
+        "query_id": 106652,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "clemson university case for apple iphone 11",
+        "query_id": 26815,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "be strong but not rude poster",
+        "query_id": 14128,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "旅行装备",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "neceser marca mujer",
+        "query_id": 72638,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "body-solid",
+        "query_id": 17956,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "rm-ed030",
+        "query_id": 87903,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "cordel plastificado",
+        "query_id": 29013,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "geles íntimos calor",
+        "query_id": 44805,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "flores para pasteles",
+        "query_id": 41471,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "sillas de escritorio sin ruedas",
+        "query_id": 93426,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "sillas de coche sin isofix",
+        "query_id": 93425,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "旅行装备",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "maletas 40x30x20",
+        "query_id": 65274,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "200x50 rueda patinete sin cámara de aire",
+        "query_id": 2842,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "2 jack hembra sin pérdida",
+        "query_id": 2580,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "alfombra bambú 200x300",
+        "query_id": 7924,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "b complex now",
+        "query_id": 11587,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "25l horno de aire sin aciete",
+        "query_id": 3115,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "juan sin movil libro",
+        "query_id": 56392,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "3 pommes sin mangas",
+        "query_id": 3413,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "axs sram",
+        "query_id": 11545,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "rha ma650 wireless",
+        "query_id": 87503,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "somier",
+        "query_id": 95982,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "cortapelo zona intima hombre",
+        "query_id": 29299,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "fiambrera infantil sin bpa",
+        "query_id": 40086,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "27 5 plus mtb",
+        "query_id": 3140,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "lg 38wn95c-w",
+        "query_id": 61781,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "bio freeze rollon",
+        "query_id": 15939,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "bandeja blanca porcelana",
+        "query_id": 12974,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "旅行装备",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "スーツケース xs",
+        "query_id": 120609,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "テント",
+        "query_id": 121195,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "モバイルバッテリーアダプター",
+        "query_id": 124255,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "送料無料 500円以下 雑貨",
+        "query_id": 129704,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "人気 コンドーム",
+        "query_id": 125365,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "中性洗剤 詰め替え",
+        "query_id": 125263,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "write and wipe",
+        "query_id": 114078,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ウィズキャリー s",
+        "query_id": 118064,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "amazon 釣り 用品",
+        "query_id": 8670,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ath cks5tw",
+        "query_id": 10936,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "くもらないリキッド 浴室用",
+        "query_id": 116591,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "26ミリ コテ 痛まない",
+        "query_id": 3136,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "タピオカ黒糖",
+        "query_id": 120862,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "amerteer ワイヤレス プレゼンター レーザーなし 遠隔マウス機能 指示棒 制御範囲10m",
+        "query_id": 8847,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "6層トレーニングパンツ",
+        "query_id": 5091,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "サファリ帽子 レディース",
+        "query_id": 119686,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "iphone xガラスフィルム 全面",
+        "query_id": 54686,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ルーロ 交換ブラシ",
+        "query_id": 124743,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "successリンスのいらないシャンプー",
+        "query_id": 98836,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ボウル",
+        "query_id": 123440,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "erick carle busy book",
+        "query_id": 37970,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "トリミングテーブル",
+        "query_id": 121435,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "fellow ラッシュガード レディース フードなし",
+        "query_id": 39902,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "bose 有線ヘッドホン",
+        "query_id": 18688,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ベランダ 用 目隠し フェンス",
+        "query_id": 123275,
+        "split": "train",
+        "status": "ok"
+      }
+    ],
+    "distractors": [
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "10lb resistance band without handles",
+        "query_id": 1594,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "1 generation ipad air keyboard case without an apple penicil",
+        "query_id": 748,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "advent candles set of 5",
+        "query_id": 7010,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "beauty products for women",
+        "query_id": 14413,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "8 range hood wall vent",
+        "query_id": 5293,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "beginner dip pen set drawing",
+        "query_id": 14713,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "beta fish foods",
+        "query_id": 15220,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "water backpack",
+        "query_id": 109874,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "iphone holder for desk",
+        "query_id": 54464,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "big blue 4.5 x 10 filter",
+        "query_id": 15588,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "romantic bath bombs",
+        "query_id": 88357,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "shark silicone",
+        "query_id": 92303,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "spring scissors for kids",
+        "query_id": 97115,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "dog obstacle course indoor",
+        "query_id": 34485,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "solar powered pond waterfall",
+        "query_id": 95878,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "gaming headset #1",
+        "query_id": 44246,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "orange comforter",
+        "query_id": 75936,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "opi gel nail polish cosmo not tonight honey",
+        "query_id": 75826,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "fancy absorbing coasters for drinks",
+        "query_id": 39550,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "premiere league",
+        "query_id": 83112,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "mal barbie descendants 3",
+        "query_id": 65211,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "yozuri bonita wahoo lure",
+        "query_id": 115230,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "samsung galaxy a20 case",
+        "query_id": 90042,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "stnad alone closet",
+        "query_id": 98209,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "vallbest human hair",
+        "query_id": 107763,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "thin slim bagels",
+        "query_id": 102716,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "the american story david rubenstein",
+        "query_id": 101798,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "teddy bear toy bag",
+        "query_id": 101185,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "bike riding helmets for girls",
+        "query_id": 15778,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "eocean selfie stick tripod",
+        "query_id": 37827,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "nationals fabric by the yard",
+        "query_id": 72297,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "jumbo beauty blender",
+        "query_id": 56567,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "elecrolyte packets",
+        "query_id": 37006,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "oracal 651 holographic",
+        "query_id": 75886,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "cushions for babies",
+        "query_id": 30904,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "airsoft",
+        "query_id": 7598,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "asus laptop charger ux305c",
+        "query_id": 10858,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "ivory wooden hangers",
+        "query_id": 55170,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "cntice nipper",
+        "query_id": 27140,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "buttercrunch cookies",
+        "query_id": 20857,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "bible covers for women with pockets",
+        "query_id": 15375,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "motion trendz",
+        "query_id": 70835,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "top swimsuit boys",
+        "query_id": 104210,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "ipad mini 4 wall mount",
+        "query_id": 53870,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "slim black christmas tree",
+        "query_id": 94399,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "press on gel nails bulk",
+        "query_id": 83169,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "k cup classic",
+        "query_id": 56780,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "rockets mighty words",
+        "query_id": 88088,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "my baby registry",
+        "query_id": 71800,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "bauer mini hockey set",
+        "query_id": 13989,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "tienda campaña altus",
+        "query_id": 103062,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "mecool km3",
+        "query_id": 66772,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "mesitas cama 150",
+        "query_id": 68297,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "pintura blanca para la cara",
+        "query_id": 80399,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "freidora qilive sin aceite",
+        "query_id": 42546,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "actic nivell mitjà",
+        "query_id": 6437,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "pañales talla 3",
+        "query_id": 78262,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "mtb 27.5 bicicletas hombre",
+        "query_id": 71348,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "15v 1a sin ruido",
+        "query_id": 2211,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "aspirador con cable sin bolsa",
+        "query_id": 10716,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "fanola no orange",
+        "query_id": 39583,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "aquahouse",
+        "query_id": 10014,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "30 laminas a4 basik canson sin recuadro",
+        "query_id": 3592,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "boyas bebederos",
+        "query_id": 19123,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "ct8g3s160bm",
+        "query_id": 30475,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "mantel cuadrado verde",
+        "query_id": 65550,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "nivea body milk nutritivo",
+        "query_id": 73995,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "cuchillos cocina niños master chef junior",
+        "query_id": 30615,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "printer",
+        "query_id": 83410,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "pantalon naranja chandal",
+        "query_id": 77544,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "camara niños instantanea",
+        "query_id": 21788,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "colchon latex 135x190",
+        "query_id": 27559,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "maybelline azul",
+        "query_id": 66576,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "cerveza",
+        "query_id": 24469,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "huusk",
+        "query_id": 52181,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ヨガソックス 滑り止めなし",
+        "query_id": 124346,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "usb ハブ 8ポート",
+        "query_id": 107403,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ミニテーブルハイ",
+        "query_id": 123959,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ジェルネイルセット ライトなし",
+        "query_id": 120075,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ポップキャンディ 不二家",
+        "query_id": 123574,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "全音楽譜",
+        "query_id": 125661,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "水サンダルベビー",
+        "query_id": 127783,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "puma 紐なし",
+        "query_id": 84269,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "hdmlケーブル 3m ミニ",
+        "query_id": 49640,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "mop brush",
+        "query_id": 70610,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "piacere ピアスを開けた後のしみない消毒スプレー",
+        "query_id": 79703,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "choya 酔わない梅酒",
+        "query_id": 25801,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "コルクボード 枠なし",
+        "query_id": 119369,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "お食事えぷろん 長袖",
+        "query_id": 116429,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "アンビット",
+        "query_id": 117921,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "s10 プラス ガラスフィルム",
+        "query_id": 89471,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "refex(リフェクス) 割れない軽量ダンス用ミラー avex dance mate エイベックスダンスメイトedm-1",
+        "query_id": 86653,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "エスティローダーナイトリペア",
+        "query_id": 118257,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "チョコ山サク次郎",
+        "query_id": 121092,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "社員が辞めない面談シート",
+        "query_id": 128629,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "子供 フォーマル 女の子",
+        "query_id": 126407,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "sgodde 自転車サドル ソフトサドル 超肉厚 低反発サドル お尻が痛くない クッション 衝撃吸収 通気性 穴開き ロ",
+        "query_id": 92146,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "jbl loudspeaker",
+        "query_id": 55629,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "qihangjp ドレッサー 椅子なし",
+        "query_id": 84834,
+        "split": "train",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "おはら ジェルネイルシール",
+        "query_id": 116304,
+        "split": "train",
+        "status": "ok"
+      }
+    ],
+    "holdout": [
+      {
+        "category": "旅行装备",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "princess ten",
+        "query_id": 83386,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "garden hammock with stand",
+        "query_id": 44389,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "sigma 105mm f1.4 art nikon",
+        "query_id": 93169,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "skylight projector",
+        "query_id": 94241,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "gel nail polish gold glitter",
+        "query_id": 44770,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "granola without nuts",
+        "query_id": 47074,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "college scantrons",
+        "query_id": 27788,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "1/24 tesla without sounds",
+        "query_id": 1088,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "旅行装备",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "fanny packs for women",
+        "query_id": 39580,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "zip up rain poncho",
+        "query_id": 115738,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "iphone xs screen replacement",
+        "query_id": 54675,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "face stixker batman",
+        "query_id": 39231,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "vegan benzoyl peroxide face wash",
+        "query_id": 108046,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "plastic whisk",
+        "query_id": 81127,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "stickers for kids food",
+        "query_id": 98124,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "baby nursery closet",
+        "query_id": 12087,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "旅行装备",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "scinch sacks",
+        "query_id": 90997,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "lifeguard swimsuit",
+        "query_id": 62162,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "dell curved monitor 49 inch",
+        "query_id": 32233,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "card table",
+        "query_id": 23013,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "hydroquinone melasma",
+        "query_id": 52285,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "kitchen spoon holders for countertop",
+        "query_id": 58637,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "cube of styrofoam",
+        "query_id": 30542,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "slim diaper changing pad",
+        "query_id": 94406,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "10 x 50 marine binoculars without range finder",
+        "query_id": 1324,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "instax camera film",
+        "query_id": 53486,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "elastic bands 1 inch wide",
+        "query_id": 36967,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "(travel size) juillet has a gun perfume not a perfume",
+        "query_id": 185,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "10 inch liners for air fryers",
+        "query_id": 1224,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "0.5 lead pencil without grip",
+        "query_id": 444,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "baby outfits",
+        "query_id": 12095,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "5 in pool noodle",
+        "query_id": 4522,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "75 ft telephone cords for landline phones",
+        "query_id": 5185,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "3.5 ft christmas tree with lights",
+        "query_id": 3492,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": ".2mm magnetic lashes without eyeliner",
+        "query_id": 343,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "10oz tervis cups without lid",
+        "query_id": 1612,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "101 workouts without weights book",
+        "query_id": 1526,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "toddler square toe cowboy boots",
+        "query_id": 103774,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "us divers snorkeling gear for adults",
+        "query_id": 107145,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "2.5\" hdd",
+        "query_id": 2750,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "1 seat sofa without arm restcover",
+        "query_id": 878,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "shimmer light purple shampoo",
+        "query_id": 92576,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "plastic dessert bowls footed",
+        "query_id": 81034,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "red pens erasable",
+        "query_id": 86444,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "8 month old towels",
+        "query_id": 5274,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "above ground slide for pool",
+        "query_id": 6087,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "3 port gigabit switch",
+        "query_id": 3415,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "10x10 mirror square",
+        "query_id": 1629,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "100% remy hair bundles without weft for box braids",
+        "query_id": 1476,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "aloe vera water without latex",
+        "query_id": 8265,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "atlas obscure",
+        "query_id": 10979,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "display cage pets",
+        "query_id": 33873,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "columbia women's back beauty long sport short",
+        "query_id": 27998,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "tws i12",
+        "query_id": 106185,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "small fireplace tool set",
+        "query_id": 94722,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "city lip plumper lip gloss",
+        "query_id": 26467,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "fine mesh strainer large",
+        "query_id": 40380,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "canvas holder for painting",
+        "query_id": 22534,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "parakeet silo feeder clean",
+        "query_id": 77812,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "white and blue fishing reel",
+        "query_id": 110930,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "razer stealth 13 skin",
+        "query_id": 85809,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "outdoor ceiling fans without light",
+        "query_id": 76544,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "tens snap pads 2x2",
+        "query_id": 101492,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "round fall placemats",
+        "query_id": 88737,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "resin gloss varnish",
+        "query_id": 87202,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "toddler sandbox with cover",
+        "query_id": 103747,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "camelbak eddy 32 oz water bottle",
+        "query_id": 21859,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "aukey charging station power cord",
+        "query_id": 11128,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "bee pillow",
+        "query_id": 14639,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "cashew oil for warts",
+        "query_id": 23603,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "christmas table cover",
+        "query_id": 26054,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "cant tie the knot without you sticker",
+        "query_id": 22513,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "muse hummingbird feeder",
+        "query_id": 71655,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "long distance running shoes women",
+        "query_id": 63450,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "usw-flex-mini",
+        "query_id": 107510,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "small metal air vents",
+        "query_id": 94800,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "jade oil",
+        "query_id": 55365,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "lime green checked place mats",
+        "query_id": 62556,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "data stamp",
+        "query_id": 31672,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "zig zag toy",
+        "query_id": 115692,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "8 speed shifter drop bar right",
+        "query_id": 5297,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "apple phone headphones",
+        "query_id": 9772,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "bag insert with cup holder",
+        "query_id": 12581,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "1 pack blue braiding hair pre stretched",
+        "query_id": 846,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "2” thick cutting board",
+        "query_id": 3280,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "armor of god book",
+        "query_id": 10370,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "hatch baby",
+        "query_id": 49436,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "orange bikes",
+        "query_id": 75929,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "bose speaker bluetooth",
+        "query_id": 18675,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "black blanket",
+        "query_id": 16371,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "makeup sale under 1.00",
+        "query_id": 65158,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "hot plate korean",
+        "query_id": 51426,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "glass jar with whire",
+        "query_id": 45874,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "molly american girl doll",
+        "query_id": 70265,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "enell high impact sports bra",
+        "query_id": 37664,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "50mm 1.8 sony",
+        "query_id": 4696,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "24x17 frame",
+        "query_id": 3055,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "embrace scar therapy",
+        "query_id": 37457,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "tempered chocolate kit",
+        "query_id": 101401,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "clothing tag ties",
+        "query_id": 27078,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "dog collar for boxer",
+        "query_id": 34363,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "yamaha waverunner tether",
+        "query_id": 114727,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "hp sprout motherboard",
+        "query_id": 51771,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "dummy door handle brass",
+        "query_id": 35939,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "triple mask",
+        "query_id": 105293,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "german food",
+        "query_id": 44997,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "rihanna book",
+        "query_id": 87672,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "rx phos bind",
+        "query_id": 89368,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "leatherman p",
+        "query_id": 60809,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "samsung google chrome notebook charger cord",
+        "query_id": 90187,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "shampoo and conditioner",
+        "query_id": 92218,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "hair towel for hair mask",
+        "query_id": 48430,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "stevia without erythritol",
+        "query_id": 98087,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "cricut explore air 2",
+        "query_id": 30108,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "baby swings for infants clearance",
+        "query_id": 12229,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "kids airsoft gun",
+        "query_id": 57663,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "pikachu ipad case 10.2",
+        "query_id": 79923,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "morocan pillow covers 18x18 pink",
+        "query_id": 70677,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "gel polish remover for toes",
+        "query_id": 44784,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "hot ones hot sauce",
+        "query_id": 51414,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "congratulations postcards",
+        "query_id": 28506,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "camelbak bite vavle kids",
+        "query_id": 21858,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "slackline",
+        "query_id": 94256,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "orange ion job rocker",
+        "query_id": 75947,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "mermade twin sheet",
+        "query_id": 68144,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "nix hot pink lipstick",
+        "query_id": 74005,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "great american products wine tumbler",
+        "query_id": 47237,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "mini number cards for paparazzi",
+        "query_id": 69470,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "tball set",
+        "query_id": 100911,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "headphones not wireless",
+        "query_id": 49760,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "dio body pillow",
+        "query_id": 33416,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "prefilled caffine sponge scrubber bath",
+        "query_id": 83068,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "orgain organic protein powder under $25",
+        "query_id": 76059,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "pastel pink school supplies",
+        "query_id": 78009,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "red dot sight sightmark",
+        "query_id": 86336,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "fire 8 case",
+        "query_id": 40428,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "crochet hook case without hooks",
+        "query_id": 30202,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "neutrogena microdermabrasion",
+        "query_id": 73031,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "plastic cereal bins",
+        "query_id": 81011,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "john mark comer",
+        "query_id": 56160,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "black and white air max shoes for women",
+        "query_id": 16298,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "microscope skin camera",
+        "query_id": 68875,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "killmonger wall art",
+        "query_id": 58152,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "braun thermoscan covers lf 20",
+        "query_id": 19548,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "numi white rose tea",
+        "query_id": 74705,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "bath paints for kids non toxic",
+        "query_id": 13624,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "women's sneakers walking shoes stylish slip on black",
+        "query_id": 112774,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "mpow flame eartips",
+        "query_id": 71205,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "leader hose female to female",
+        "query_id": 60594,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "us",
+        "prompt_version": "query-class-v1",
+        "query": "brown mascara",
+        "query_id": 20077,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "旅行装备",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "maleta 55x40x20",
+        "query_id": 65258,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "bateria patinete 60v",
+        "query_id": 13547,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "ajazz ak33 blue switch",
+        "query_id": 7661,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "0lanchas sin cable",
+        "query_id": 592,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "acrilico cover para uñas",
+        "query_id": 6391,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "30g ginebra sin alcol",
+        "query_id": 3637,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "album guardería",
+        "query_id": 7789,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "abrigos para niños de 10 años",
+        "query_id": 6119,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "旅行装备",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "bolso avion 40x20x25",
+        "query_id": 18151,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "arco profesional de tiro",
+        "query_id": 10168,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "32 gb ssd",
+        "query_id": 3670,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "3 metros de luces led sin enchufw",
+        "query_id": 3386,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "144 preservativos sin latex",
+        "query_id": 2112,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "noodles sin gluten",
+        "query_id": 74268,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": ", almohadilla sin tinta para sellos",
+        "query_id": 232,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "jyoko bolso bebe",
+        "query_id": 56766,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "accolmile",
+        "query_id": 6237,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "2 tomas sin cable vertical",
+        "query_id": 2691,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "lampara mesa dibujo",
+        "query_id": 59734,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "1 mascarilla sin aclarado",
+        "query_id": 811,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "asturiana sin lactosa semidesnatada",
+        "query_id": 10831,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "3 restas sin llevada",
+        "query_id": 3427,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "gallineros grandes exterior metalicos",
+        "query_id": 44096,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "bolsa viaje tactica 80l",
+        "query_id": 18128,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "b&o altavoces",
+        "query_id": 11603,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "1 gang 2 way wifi sin neutro",
+        "query_id": 747,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "cabina rayos uva",
+        "query_id": 21067,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "proteina guisante texturizada",
+        "query_id": 83807,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "1 sumas sin llevada",
+        "query_id": 888,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "regalo para bautizo niño",
+        "query_id": 86744,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "camiseta de rugby francia",
+        "query_id": 21972,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "cargador coche carga rapida samsung",
+        "query_id": 23115,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "bolas de navidad rosas doradas",
+        "query_id": 18067,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "crema nuxe reve miel",
+        "query_id": 30000,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "utensilios ecologicos",
+        "query_id": 107525,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "el dia q se perdio la cordura",
+        "query_id": 36892,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "cochede juguete para niños",
+        "query_id": 27260,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "zapatos deportivos hombre ofertas",
+        "query_id": 115494,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "teclado bluetooth sin receptor",
+        "query_id": 101139,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "4patas sin ruedas 40x30",
+        "query_id": 4417,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "kmax concealing color spray",
+        "query_id": 58779,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "repuesto vaso licuadora oster",
+        "query_id": 87168,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "libro escritura 4 años",
+        "query_id": 61999,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "bellies",
+        "query_id": 14824,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "faros de bicicleta americana",
+        "query_id": 39671,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "elgato capturadora",
+        "query_id": 37331,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "organizador colgante",
+        "query_id": 76183,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "tintes profesionales de peluqueria sin amoniaco",
+        "query_id": 103297,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "ornos electricos de cocina",
+        "query_id": 76299,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "juguete minnie mouse",
+        "query_id": 56488,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "boxer running hombre",
+        "query_id": 19056,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "b450 aorus",
+        "query_id": 11673,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "silla estetica",
+        "query_id": 93401,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "champu cabello graso sin sulfatos",
+        "query_id": 24740,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "sarten de cobre",
+        "query_id": 90592,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "cazadora niña 3 años",
+        "query_id": 24047,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "step fitness de 1 metro",
+        "query_id": 97968,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "samsung pendrive",
+        "query_id": 90236,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "tela azul por metros",
+        "query_id": 101283,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "estrias senos",
+        "query_id": 38289,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "tefal electrica picadoras",
+        "query_id": 101264,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "chandal nike mujer invierno",
+        "query_id": 24784,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "disco ssd 240gb",
+        "query_id": 33541,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "calentador electrico",
+        "query_id": 21563,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "loreal corrector ojeras",
+        "query_id": 63696,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "comida deshidratada sin gluten",
+        "query_id": 28111,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "seascooter bateria",
+        "query_id": 91360,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "modulo salidas raspberry",
+        "query_id": 70166,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "electric estufa",
+        "query_id": 37050,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "20 piezas de pinzas para el pelo sin doblar clips",
+        "query_id": 2809,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "te azul oolong bolsitas",
+        "query_id": 100942,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "mallas kalenji mujer",
+        "query_id": 65303,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "lg velvet 5g funda",
+        "query_id": 61920,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "bombillas led 2w",
+        "query_id": 18231,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "es",
+        "prompt_version": "query-class-v1",
+        "query": "jabon acido salicilico",
+        "query_id": 55263,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "旅行装备",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "アイマスク 起こさないで",
+        "query_id": 117566,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "[lock laces] ロックレース - 靴紐 結ばない ゴム紐 シューレース",
+        "query_id": 5767,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "esr 2in1タイプcイヤホン変換ケーブル",
+        "query_id": 38160,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "tシャツはんがー 形崩れなし",
+        "query_id": 106266,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ギブスカバー防水",
+        "query_id": 119035,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ihコンロ コンセントなし",
+        "query_id": 52765,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "a5 スケジュールノート マンスリー",
+        "query_id": 5984,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "うんちにおわない袋 ss",
+        "query_id": 116223,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ふるたんぐないふ",
+        "query_id": 117234,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "bluetooth イヤホン sony",
+        "query_id": 17651,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "たおるかけ キッチン",
+        "query_id": 116876,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "アロマオイル",
+        "query_id": 117871,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "こんにゃくパスタ 糖質なし",
+        "query_id": 116676,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "机幅75",
+        "query_id": 127499,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ふわふわベビーパンツ",
+        "query_id": 117237,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "バスケットボール 5号 人工皮革",
+        "query_id": 122125,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "acアダプターlenovo typec",
+        "query_id": 6497,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "扇風機 ハンディ 羽なし",
+        "query_id": 126990,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "あらいながさないトリートメントラックス",
+        "query_id": 116129,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "nl-bc05",
+        "query_id": 74017,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "合格る計算",
+        "query_id": 125985,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ミナミヌマエビ",
+        "query_id": 123936,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "nikeシルバー",
+        "query_id": 73725,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "hdmi ケーブル usb",
+        "query_id": 49630,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "くつぞこ 補修 ゴム",
+        "query_id": 116584,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ケノン 脱毛器",
+        "query_id": 119236,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "サーモス 水筒 400",
+        "query_id": 119793,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "漫画で読破",
+        "query_id": 128090,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "抱っこ紐 首かっくん防止",
+        "query_id": 127082,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "カマドスマートグリル b5型",
+        "query_id": 118588,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "kz atr",
+        "query_id": 59237,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "オール床クリーナー",
+        "query_id": 118486,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ヘアアイロンコードなし",
+        "query_id": 123129,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "耐熱 ピッチャーとってなし",
+        "query_id": 129003,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "コーソベース",
+        "query_id": 119453,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ベビーカー用 ひんやり",
+        "query_id": 123251,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "アンダーアーマー シューズバック",
+        "query_id": 117894,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "so-03lケース ブランド",
+        "query_id": 95519,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "アイファンポルタ ミニ",
+        "query_id": 117527,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ロディオラ",
+        "query_id": 124941,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ソーセージ 皮なし",
+        "query_id": 120755,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "dcp j982n",
+        "query_id": 31844,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ハロピカチュウ",
+        "query_id": 121962,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "子供のじてんしゃ ペダルなし",
+        "query_id": 126419,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "８tb hdd",
+        "query_id": 130559,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "棉拖鞋",
+        "query_id": 127615,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "長い クリップ",
+        "query_id": 129943,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "サンガリア 炭酸水 ラベルなし",
+        "query_id": 119721,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "天眼鏡",
+        "query_id": 126316,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "女児 ショーツ 160",
+        "query_id": 126346,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "自転車ぐりっぷエンド",
+        "query_id": 129192,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "iphone6sケース 手帳型",
+        "query_id": 54731,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "次亜塩素酸水 スプレー",
+        "query_id": 127693,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "スロウコンシーラー",
+        "query_id": 120597,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "分解しないで洗える象印",
+        "query_id": 125755,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "dd1種",
+        "query_id": 31848,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "蟻飼育ケース",
+        "query_id": 129364,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "２０インチタイヤ",
+        "query_id": 130546,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "lightning イヤホン",
+        "query_id": 62444,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "額なし網戸",
+        "query_id": 130298,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ホイップドボディクリーム アンバーバニラ",
+        "query_id": 123378,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "濃いお茶 500ml",
+        "query_id": 128098,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "办公学习",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "猫",
+        "query_id": 128305,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "コンビ ジョイキッズ",
+        "query_id": 119435,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ジャグ",
+        "query_id": 120110,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ラジコン 充電器",
+        "query_id": 124445,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "バックいんばっぐ ビジネス用",
+        "query_id": 122147,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "韓国 メディヒール パック",
+        "query_id": 130263,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "かーる",
+        "query_id": 116512,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "母婴宠物",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "猫きゃりーバッグ 人気",
+        "query_id": 128324,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "户外运动",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "ドライバー sldr",
+        "query_id": 121521,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "数码配件",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "bskbw100sbk",
+        "query_id": 20175,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "家居生活",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "壁 フック 傷つけない",
+        "query_id": 126160,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "美妆个护",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "使い捨てはぶらし 歯磨き粉なし",
+        "query_id": 125524,
+        "split": "test",
+        "status": "ok"
+      },
+      {
+        "category": "厨房餐饮",
+        "locale": "jp",
+        "prompt_version": "query-class-v1",
+        "query": "味覚糖 プロポリス",
+        "query_id": 126048,
+        "split": "test",
+        "status": "ok"
+      }
+    ]
+  },
+  "rejected": [
+    {
+      "locale": "us",
+      "query_id": 3097,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 86294,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 102464,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 26145,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 48842,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 14680,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 45702,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 29984,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 36915,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 35294,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 7659,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 83265,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 189,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "jp",
+      "query_id": 116592,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 115165,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 45579,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 41877,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 19301,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 53350,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 91532,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 4125,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 74455,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 13498,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 102230,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 59208,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 50742,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 101116,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 66313,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 47008,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 45578,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 83285,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 17346,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 113453,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 86262,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 106587,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 105740,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 73810,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 63393,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 25881,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 45551,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 80588,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "us",
+      "query_id": 28577,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 68126,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 2770,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 33674,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 70225,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 4532,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 62025,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 50955,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 8716,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 82056,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 51476,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 68803,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "es",
+      "query_id": 40300,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "jp",
+      "query_id": 2484,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "jp",
+      "query_id": 117295,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "jp",
+      "query_id": 116339,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "jp",
+      "query_id": 127488,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "jp",
+      "query_id": 122845,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "jp",
+      "query_id": 128464,
+      "reason": "no_exact_or_other_category"
+    },
+    {
+      "locale": "jp",
+      "query_id": 127472,
+      "reason": "no_exact_or_other_category"
+    }
+  ],
+  "seed": 20261014,
+  "targets": {
+    "dev": 100,
+    "distractors": 100,
+    "holdout": 300
+  }
+}

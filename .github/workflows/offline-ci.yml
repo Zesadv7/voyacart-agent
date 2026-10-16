@@ -1,0 +1,148 @@
+name: Offline regression
+
+on:
+  pull_request:
+  push:
+    branches: [main, work/m1-baseline-ci]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: offline-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.scope.outputs.backend }}
+      frontend: ${{ steps.scope.outputs.frontend }}
+      compose: ${{ steps.scope.outputs.compose }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: scope
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          args=()
+          if [ "$EVENT" = workflow_dispatch ]; then args+=(--all); fi
+          python -m scripts.ci.scope --base "$BASE" "${args[@]}" --github-output "$GITHUB_OUTPUT"
+
+  secrets:
+    name: Known-format secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m scripts.ci.secret_scan
+
+  backend:
+    name: Backend full regression
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.12.23'
+      - run: sudo apt-get update && sudo apt-get install -y redis-server
+      - run: uv sync --frozen --extra esci --extra optimization
+      - run: mkdir -p eval/verification/ci-backend
+      - name: Complete offline backend and ESCI regression
+        run: uv run --no-sync python -m scripts.ci.backend --junitxml=eval/verification/ci-backend/pytest.xml
+      - name: Locust contracts in an isolated interpreter
+        run: uv run --frozen --isolated --group loadtest python -m pytest -q -ra tests/test_agui_loadtest.py tests/test_hotspot_client.py --junitxml=eval/verification/ci-backend/locust.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: backend-${{ github.sha }}
+          path: eval/verification/ci-backend
+          retention-days: 30
+
+  http:
+    name: Deterministic HTTP and restart
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.12.23'
+      - run: uv sync --frozen
+      - run: uv run --no-sync python -m scripts.ci.mock_smoke --signed --output eval/verification/ci-http
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: http-${{ github.sha }}
+          path: eval/verification/ci-http
+          retention-days: 30
+
+  frontend:
+    name: Frontend tests and production build
+    needs: changes
+    if: needs.changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm --prefix frontend ci
+      - run: npm --prefix frontend test
+      - run: npm --prefix frontend run build
+
+  compose:
+    name: Compose configuration contracts
+    needs: changes
+    if: needs.changes.outputs.compose == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      LLM_BASE_URL: http://mock-llm:8081/v1
+      LLM_API_KEY: ci-local-placeholder
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose version
+      - run: docker compose -f docker/docker-compose.yaml config --quiet
+      - run: docker compose -f docker/docker-compose.scale.yaml --profile mock config --quiet
+
+  offline-required:
+    name: Offline regression complete
+    needs: [changes, secrets, backend, http, frontend, compose]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: |
+          python - <<'PY'
+          import json, os
+          results = json.loads(os.environ['RESULTS'])
+          assert results['changes']['result'] == 'success', results
+          assert results['secrets']['result'] == 'success', results
+          scope = results['changes']['outputs']
+          for name, layer in {'backend': 'backend', 'http': 'backend', 'frontend': 'frontend', 'compose': 'compose'}.items():
+              expected = 'success' if scope[layer] == 'true' else 'skipped'
+              assert results[name]['result'] == expected, (name, results[name], expected)
+          print('All applicable offline layers passed; skipped layers are path-scoped, not model validation.')
+          PY

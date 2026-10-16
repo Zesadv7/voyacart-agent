@@ -1,0 +1,82 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.pytest_cache/
+# 运行态数据仍忽略；评测基准商品集必须随代码版本化。
+data/*
+!data/catalog-v1.jsonl
+data/raw/
+!data/esci/
+data/esci/*
+!data/esci/source.json
+!data/esci/query-class-v1.jsonl
+# ESCI 正式评测目录、抽样、代理类目与中文译文缓存随评测结论版本化。
+!data/esci/selection-v1.json
+!data/esci/selection-v2.json
+!data/esci/enrichment-batch-v1.jsonl
+!data/esci/category-proxy-v1.jsonl
+!data/esci/translate-zh-v1.jsonl
+eval/report-*.md
+# 召回评测报告同样是每次跑测的产物，不入库；标注集（eval/*.jsonl）要入库
+eval/recall-report-*.md
+eval/category-recall-report-*.md
+
+# 课程资料与本地工具目录：只保留在本地，不入工程仓库
+.baoyu-skills/
+.idea/
+.qoder/
+/images/
+/learn-claude-code/
+/pi/
+node_modules/
+
+# 课程仓库内容（根目录）：只保留在本地 main 分支，不入工程仓库
+/*.md
+!/README.md
+!/AGENTS.md
+/*.html
+/*.json
+/*.xml
+/*.png
+/*.jpg
+/.nojekyll
+/.env-example
+/.husky/
+/.vscode/
+/lib/
+/odps_task/
+/案例与源码-*/
+/实战项目-*/
+/项目实战-*/
+/LICENSE
+/commitlint.config.js
+/requirements.txt
+/repo-auth-service/
+
+# 多语言合成目录随源码交付；本机依赖和构建缓存不入库。
+!data/catalog-v2.jsonl
+!data/catalog-v3.jsonl
+!data/catalog-demo.jsonl.gz
+!data/catalog-esci-demo-2000.jsonl.gz
+!data/catalog-esci-v1.jsonl.gz
+!data/catalog-esci-v2.jsonl.gz
+.cache/
+frontend/dist/
+*.tsbuildinfo
+
+# 评测使用的临时买家/学习数据库只保留在本机。
+/eval/verification/**/isolated/
+/eval/verification/**/runtime/
+# 模型凭据主密钥永不进入版本库（含自定义 DATA_DIR）。
+**/.secrets/
+.research/
+
+# 公开源码快照：保留项目许可与来源说明，诊断证据通过受控 CI artifacts 交付。
+!/LICENSE
+!/SOURCE_PROVENANCE.md
+/eval/verification/
+
+# Historical evaluation result metadata is retained locally, not publicly imported.
+/eval/esci/baselines/
+/eval/esci-v2/baselines/

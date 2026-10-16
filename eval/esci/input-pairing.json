@@ -1,0 +1,66 @@
+{
+  "artifacts": {
+    "catalog": {
+      "blake2b": "b072f00d929cd87512d796a29106e4a40d8381fa4b4fd98606b458031d34276ade1234890def0abcd7067c2f2324401f118117106086ee420e9c7ef9ecf33925",
+      "bytes": 5713330,
+      "path": "../../data/catalog-esci-v1.jsonl.gz"
+    },
+    "constraints-dev": {
+      "blake2b": "338a60696f9327826a5f142f4371b1766791035540cf8b2af3a04d2a7de9db20a45899caefcac562631960c49130744abf70e9a705381425ec9ee1ff0dca1e08",
+      "bytes": 24809,
+      "path": "constraints-dev.jsonl"
+    },
+    "constraints-holdout": {
+      "blake2b": "04999ce6ce4e9d62af4936967ea40e52a852a56ccb54ab2184145208119c50b7475928bcc8a80801ae41237671dbfab42e2f0bb2c97bdc41fcec61000fded8ea",
+      "bytes": 73484,
+      "path": "constraints-holdout.jsonl"
+    },
+    "crosslingual-zh": {
+      "blake2b": "83c0de1b3b501b8e0c56a765cf55d90c639da56eac07a0bd68a781f2f3699517d423e226b44c13ce5cd03d769eccf7450e16293c0602ad068df34d4e04fe3262",
+      "bytes": 97766,
+      "path": "crosslingual-zh.jsonl"
+    },
+    "ranking-dev": {
+      "blake2b": "89d13ebbbdd8ae85c05a5a63b78a734d08fe43e9e69775bf32f2f85624f8489bfb95c890cacff6a4817a1bf342962ee4a754fca79f72e31b40505bfde142854b",
+      "bytes": 101222,
+      "path": "ranking-dev.jsonl"
+    },
+    "ranking-holdout": {
+      "blake2b": "1000544f627b476a83204f34dd747c2f48a472461752b207b933cf325bfbdbb2c079eb3512c7e37f6c7cdf0933c657d123c7718f8f38074fa8a8811df5a9e6aa",
+      "bytes": 303376,
+      "path": "ranking-holdout.jsonl"
+    },
+    "retrieval-dev": {
+      "blake2b": "52875c29270d07b6374746791060a493343b63a361e29981a5d11e68fe46ee9da01709d806888b4378f2ae178838fdc9aba6f4cbe2d56875bdf06300652f933c",
+      "bytes": 44725,
+      "path": "retrieval-dev.jsonl"
+    },
+    "retrieval-holdout": {
+      "blake2b": "ccd8b67b796557e25ad90733c5a547fdfe91fd90f177912cd2f272653bdff7194c4ab41565531164ebd5a2e642f57d44e264428bccdd93fe903c2ebefe1a3851",
+      "bytes": 133977,
+      "path": "retrieval-holdout.jsonl"
+    },
+    "selection": {
+      "blake2b": "6afb87541caeeccc9e75fd04e48e9f35db8ef5fea3027afbd75fa1d5f4c700cdfaae8b94066f92c9c172c925ec058a15eb5fd608a3945264071b951258e55bc9",
+      "bytes": 121252,
+      "path": "../../data/esci/selection-v1.json"
+    }
+  },
+  "baseline_version": "v1",
+  "dataset_version": "v1",
+  "fingerprint_method": "blake2b",
+  "identity_mapping": {
+    "blake2b": "dec2e77137b9f7ed5855fabeb40bde43a770273d3bdd3ea999f37204326e045046e4c7888fb87fe2dd42471d64ddf83e592661966a25206d7075729d1ff2ebca",
+    "method": "blake2b-canonical-json-product-external-identity-sku-v1",
+    "product_count": 12123,
+    "sku_count": 12123
+  },
+  "notes": [
+    "追加伴随清单；既有 JSONL、批准基线及冻结参数保持原样。",
+    "内容配对验证不代表人工 QA 或模型执行通过。",
+    "开发档不打开留出输入；留出档仅在既有一次尝试政策下运行。"
+  ],
+  "role": "frozen_esci",
+  "schema_version": "esci-input-pairing-v1",
+  "source_commit": "7916cdf6ab75a462e77f20ab40428a10923998d5"
+}

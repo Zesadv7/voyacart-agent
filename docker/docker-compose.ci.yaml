@@ -1,0 +1,91 @@
+# 专用合成测试项目。只能由 scripts.ci.container_smoke 创建随机 project 使用。
+# 不读 .env；API/mock/probe 在 internal 网络内，全部不发布宿主端口。
+services:
+  app:
+    extends:
+      file: docker-compose.yaml
+      service: app
+    image: ${CI_RUNTIME_IMAGE:?use scripts.ci.container_smoke}
+    build: !reset null
+    ports: !reset []
+    depends_on: !override
+      mock-llm:
+        condition: service_healthy
+    restart: "no"
+    environment:
+      # 这些变量独立于真实部署；容器不接收宿主凭据。
+      HOME: /tmp/ci-home
+      PYTHON_DOTENV_DISABLED: "1"
+      LLM_BASE_URL: http://mock-llm:8081/v1
+      LLM_API_KEY: ci-local-placeholder
+      LLM_MODEL: mock-chat
+      LLM_FALLBACK_MODEL: ""
+      LLM_MIN_INTERVAL_SECONDS: "0"
+      LLM_MAX_RETRIES: "0"
+      EMBEDDING_BASE_URL: http://mock-llm:8081/v1
+      EMBEDDING_API_KEY: ci-local-placeholder
+      EMBEDDING_MODEL: mock-embedding
+      EMBEDDING_DIM: "1024"
+      EMBEDDING_MAX_BATCH: "100"
+      QDRANT_URL: ""
+      RERANKER_MODE: disabled
+      REDIS_URL: ""
+      QUEUE_ENABLED: "0"
+      AGUI_QUEUE_ENABLED: "0"
+      SEMANTIC_CACHE_ENABLED: "0"
+      AUTOMATION_WORKER_MODE: "off"
+      IDENTITY_MODE: hmac
+      IDENTITY_HMAC_SECRET: m6-public-synthetic-HMAC-never-production
+      OTEL_SDK_DISABLED: "true"
+    volumes: !override
+      - ${CI_STATE_SLOT:-initial}:/app/data
+    networks: [mock-only]
+
+  mock-llm:
+    image: ${CI_RUNTIME_IMAGE:?use scripts.ci.container_smoke}
+    command: ["uvicorn", "--app-dir", "/app/scripts/loadtest", "mock_llm:app", "--host", "0.0.0.0", "--port", "8081", "--no-access-log"]
+    environment:
+      HOME: /tmp/ci-home
+      PYTHON_DOTENV_DISABLED: "1"
+      MOCK_TTFT_SECONDS: "0"
+      MOCK_TOKEN_SECONDS: "0"
+      MOCK_ERROR_RATE: "0"
+      MOCK_ORDER_RATE: "0"
+      MOCK_RESPONSE_TOKENS: "80"
+      MOCK_FAULT_CONTROL: "1"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8081/health', timeout=3)"]
+      interval: 2s
+      timeout: 4s
+      retries: 30
+    cpus: "1.0"
+    mem_limit: 512m
+    pids_limit: 64
+    restart: "no"
+    networks: [mock-only]
+
+  probe:
+    image: ${CI_PROBE_IMAGE:?use scripts.ci.container_smoke}
+    profiles: [tools]
+    environment:
+      PYTHON_DOTENV_DISABLED: "1"
+    volumes:
+      - ${CI_STATE_SLOT:-initial}:/app/data
+      - initial:/ci-original:ro
+      - restored:/ci-restored
+      - snapshot:/ci-snapshot
+      - probe-state:/ci-state
+    cpus: "1.0"
+    mem_limit: 1g
+    pids_limit: 64
+    networks: [mock-only]
+
+networks:
+  mock-only:
+    internal: true
+
+volumes:
+  initial:
+  restored:
+  snapshot:
+  probe-state:

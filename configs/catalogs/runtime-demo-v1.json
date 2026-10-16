@@ -1,0 +1,13 @@
+{
+  "schema_version": "runtime-catalog-v1",
+  "catalog": "catalog-demo.jsonl.gz",
+  "role": "runtime_demo",
+  "blake2b": "2ef61e96172723a8fedacb50b105aaff8b9ddebd956411a23143bc2146f9648264cf7eb782aecd390b4445d418969af58a1a0ba9831a6b3fabbb22332bc39b56",
+  "products": 5700,
+  "skus": 9105,
+  "identity_digest": "26b0cd886cb9ef641b129317d0d12924862605d577aa5865543ad514d33a09f7",
+  "source_scope": "3700 synthetic examples plus 2000 ESCI train Exact products",
+  "commerce_fields": "synthetic prices, inventory and destinations; unpaid purchase intent only",
+  "embedding_artifact_included": false,
+  "production_model_image_status": "not frozen or validated by this offline milestone"
+}

@@ -1,0 +1,34 @@
+name: Container mock regression
+
+on:
+  pull_request:
+  push:
+    branches: [main, work/m1-baseline-ci]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: container-mock-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  container-mock:
+    name: Build, signed HTTP, volume restart and snapshot rollback
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Build and exercise isolated mock containers
+        run: python3 -m scripts.ci.container_smoke --output eval/verification/ci-container
+      - name: Preserve synthetic reports and container logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: container-mock-${{ github.sha }}-${{ github.run_attempt }}
+          path: eval/verification/ci-container
+          if-no-files-found: error
+          retention-days: 14

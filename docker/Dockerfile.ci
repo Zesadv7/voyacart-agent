@@ -1,0 +1,6 @@
+# CI probe 基于本次刚构建的运行镜像；无 Docker socket、不发布镜像。
+ARG RUNTIME_IMAGE=voyacart-runtime:container-ci
+FROM ${RUNTIME_IMAGE}
+COPY scripts/ci ./scripts/ci
+COPY pyproject.toml uv.lock ./
+ENTRYPOINT ["python", "-m", "scripts.ci.container_probe"]

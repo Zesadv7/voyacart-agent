@@ -1,0 +1,131 @@
+name: Harness regression
+
+# 安全契约是 main 规则集的必需检查，必须对每个 PR 报告结果；
+# 真实模型评测仍只在下列路径变化时运行，由 changes 任务判定。
+on:
+  pull_request:
+  push:
+    branches: [main, work/m1-baseline-ci]
+  workflow_dispatch:
+    inputs:
+      approve_model_budget:
+        description: '明确批准所选冻结套件的真实模型调用预算'
+        type: boolean
+        default: false
+      profile:
+        type: choice
+        options: [smoke, dev, release]
+        default: smoke
+
+permissions:
+  contents: read
+
+concurrency:
+  group: harness-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  changes:
+    name: Detect model evaluation scope
+    runs-on: ubuntu-latest
+    outputs:
+      model: ${{ steps.scope.outputs.model }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: scope
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          args=()
+          if [ "$EVENT" = workflow_dispatch ]; then args+=(--all); fi
+          python -m scripts.ci.scope --base "$BASE" "${args[@]}" --github-output "$GITHUB_OUTPUT"
+
+
+  safety-contracts:
+    name: Offline safety contracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      LLM_API_KEY: ''
+      LLM_BASE_URL: http://127.0.0.1:1/v1
+      EMBEDDING_BASE_URL: http://127.0.0.1:1/v1
+      DATA_DIR: /tmp/voyacart-contracts
+      REDIS_URL: ''
+      LANGFUSE_SECRET_KEY: ''
+      LANGFUSE_PUBLIC_KEY: ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.12.23'
+      - run: uv sync --frozen
+      - name: Safety contracts without model credentials
+        run: uv run python -m scripts.eval.harness run --profile contracts --output eval/verification/ci-contracts
+      - name: Preserve contract report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-contracts-${{ github.run_id }}-${{ github.run_attempt }}
+          path: eval/verification/ci-contracts
+          retention-days: 30
+
+  model-scope:
+    name: Real model scope and authorization
+    needs: changes
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          AFFECTED: ${{ needs.changes.outputs.model }}
+          AUTHORIZED: ${{ github.event_name == 'workflow_dispatch' && inputs.approve_model_budget }}
+        run: |
+          echo "Model-affecting scope: $AFFECTED; explicit budget approval: $AUTHORIZED" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$AFFECTED" = true ] && [ "$AUTHORIZED" != true ]; then
+            echo 'Real model validation BLOCKED: dispatch with budget approval after reviewing the frozen suite. Offline checks do not replace this gate.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  model-evaluation:
+    name: Real model evaluation
+    needs: [changes, safety-contracts]
+    if: needs.changes.outputs.model == 'true' && github.event_name == 'workflow_dispatch' && inputs.approve_model_budget
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      LLM_BASE_URL: ${{ secrets.HARNESS_LLM_BASE_URL }}
+      LLM_API_KEY: ${{ secrets.HARNESS_LLM_API_KEY }}
+      LLM_MODEL: ${{ vars.HARNESS_LLM_MODEL || 'qwen3.8-flash' }}
+      LLM_FALLBACK_MODEL: ''
+      REDIS_URL: ''
+      LANGFUSE_SECRET_KEY: ''
+      LANGFUSE_PUBLIC_KEY: ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.12.23'
+      - run: uv sync --frozen
+      - name: Real model evaluation
+        env:
+          HARNESS_PROFILE: ${{ inputs.profile || 'smoke' }}
+        run: |
+          if [ "$HARNESS_PROFILE" = release ]; then
+            uv run python -m scripts.eval.harness run --profile release --output eval/verification/ci-model --require-benefit
+          else
+            uv run python -m scripts.eval.harness run --profile "$HARNESS_PROFILE" --output eval/verification/ci-model
+          fi
+          uv run python -m scripts.eval.harness verify eval/verification/ci-model
+      - name: Preserve HTML and raw failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-model-${{ github.run_id }}-${{ github.run_attempt }}
+          path: eval/verification/ci-model
+          retention-days: 30

@@ -1,0 +1,98 @@
+# 单机共享 SQLite。Compose 2.24.4+；副本数通过 --scale api=N --scale worker=M 设置。
+x-scale-options: &scale-options
+  AUTOMATION_WORKER_MODE: external
+  BREAKER_SHARED: "1"
+  SEQUENCING_PERSISTENCE_ENABLED: "1"
+  AGUI_QUEUE_ENABLED: ${AGUI_QUEUE_ENABLED:-1}
+  AGUI_DELTA_COALESCE_MS: ${AGUI_DELTA_COALESCE_MS:-50}
+  QUEUE_ENABLED: "1"
+  REDIS_URL: redis://redis:6379/0
+  QDRANT_URL: http://qdrant:6333
+
+# API/两个 worker/Redis/Qdrant 从基础文件继承限制与轮转；网关/mock 显式配置。
+x-small-service-limits: &small-service-limits
+  cpus: "0.5"
+  mem_limit: 128m
+  pids_limit: 64
+  logging:
+    driver: json-file
+    options:
+      max-size: "10m"
+      max-file: "3"
+
+services:
+  api:
+    extends:
+      file: docker-compose.yaml
+      service: app
+    image: voyacart-runtime:scale
+    ports: !reset []
+    # healthcheck 从 app 继承，避免两套 /health 合同漂移。
+    environment:
+      <<: *scale-options
+
+  worker:
+    extends:
+      file: docker-compose.yaml
+      service: worker
+    image: voyacart-runtime:scale
+    environment:
+      <<: *scale-options
+
+  automation-worker:
+    extends:
+      file: docker-compose.yaml
+      service: worker
+    image: voyacart-runtime:scale
+    command: ["python", "-m", "app.automation_worker"]
+    environment:
+      <<: *scale-options
+
+  nginx:
+    <<: *small-service-limits
+    build:
+      context: ..
+      dockerfile: frontend/Dockerfile
+      args:
+        FRONTEND_DIR: frontend
+        NGINX_CONFIG: docker/nginx.scale.conf
+    ports:
+      - "127.0.0.1:${VOYACART_SCALE_PORT:-8080}:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+  redis:
+    extends:
+      file: docker-compose.yaml
+      service: redis
+    ports: !reset []
+
+  qdrant:
+    extends:
+      file: docker-compose.yaml
+      service: qdrant
+    ports: !reset []
+
+  mock-llm:
+    <<: *small-service-limits
+    cpus: "1.0"
+    mem_limit: 256m
+    image: voyacart-runtime:scale
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    profiles: [mock]
+    command: ["uvicorn", "--app-dir", "/app/scripts/loadtest", "mock_llm:app", "--host", "0.0.0.0", "--port", "8081"]
+    environment:
+      MOCK_TTFT_SECONDS: ${MOCK_TTFT_SECONDS:-0.8}
+      MOCK_TOKEN_SECONDS: ${MOCK_TOKEN_SECONDS:-0.03}
+      MOCK_ERROR_RATE: ${MOCK_ERROR_RATE:-0}
+      MOCK_RESPONSE_TOKENS: ${MOCK_RESPONSE_TOKENS:-300}
+      MOCK_ORDER_RATE: ${MOCK_ORDER_RATE:-0.1}
+
+volumes:
+  app-data:
+  redis-data:
+  qdrant-data:

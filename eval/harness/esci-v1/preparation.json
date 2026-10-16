@@ -1,0 +1,359 @@
+{
+  "case_count": 10,
+  "cases": [
+    {
+      "id": "esci-zh-us",
+      "pending_fields": [
+        "final_query_selection",
+        "product_id",
+        "sku_id",
+        "price",
+        "stock",
+        "ships_to",
+        "independent_train_chinese_translation"
+      ],
+      "required_checks": [
+        "exact_product_returned",
+        "foreign_title_preserved"
+      ],
+      "scenario": "crosslingual",
+      "source_products": [
+        {
+          "asin": "B000MBUOOO",
+          "esci_label": "E",
+          "locale": "us",
+          "title": "Intex Easy Set Up 10 Foot x 30 Inch Pool"
+        }
+      ],
+      "source_query": {
+        "locale": "us",
+        "query": "10ft summer waves pool without pump",
+        "query_id": 1567,
+        "split": "train"
+      },
+      "split": "dev",
+      "status": "prepared"
+    },
+    {
+      "id": "esci-zh-es",
+      "pending_fields": [
+        "final_query_selection",
+        "product_id",
+        "sku_id",
+        "price",
+        "stock",
+        "ships_to",
+        "independent_train_chinese_translation"
+      ],
+      "required_checks": [
+        "exact_product_returned",
+        "foreign_title_preserved"
+      ],
+      "scenario": "crosslingual",
+      "source_products": [
+        {
+          "asin": "B08LSVSL84",
+          "esci_label": "E",
+          "locale": "es",
+          "title": "Serie Éxito y productividad sin límites (Boxset digital): Serie de 3 libros: Cómo vencer el miedo y dejar de procrastinar, Los 10 secretos del arte del éxito y Los únicos 6 pasos para cambiar hábitos"
+        }
+      ],
+      "source_query": {
+        "locale": "es",
+        "query": "(éxito y productividad sin límites",
+        "query_id": 189,
+        "split": "train"
+      },
+      "split": "dev",
+      "status": "prepared"
+    },
+    {
+      "id": "esci-zh-jp",
+      "pending_fields": [
+        "final_query_selection",
+        "product_id",
+        "sku_id",
+        "price",
+        "stock",
+        "ships_to",
+        "independent_train_chinese_translation"
+      ],
+      "required_checks": [
+        "exact_product_returned",
+        "foreign_title_preserved"
+      ],
+      "scenario": "crosslingual",
+      "source_products": [
+        {
+          "asin": "B000AYCEJQ",
+          "esci_label": "E",
+          "locale": "jp",
+          "title": "CREATE ION イオンカールアイロン直径26mm 7208"
+        }
+      ],
+      "source_query": {
+        "locale": "jp",
+        "query": "26ミリ コテ 痛まない",
+        "query_id": 3136,
+        "split": "train"
+      },
+      "split": "dev",
+      "status": "prepared"
+    },
+    {
+      "id": "esci-destination",
+      "pending_fields": [
+        "final_query_selection",
+        "product_id",
+        "sku_id",
+        "price",
+        "stock",
+        "ships_to"
+      ],
+      "required_checks": [
+        "destination_constraint_preserved",
+        "no_constraint_leak"
+      ],
+      "scenario": "destination",
+      "source_products": [
+        {
+          "asin": "B01MXRMREE",
+          "esci_label": "E",
+          "locale": "us",
+          "title": "Emoi BPA Free Water Bottle, 12oz/360ml Cute Water Bottle with Carrying Strap, Ideal for Kids Boys Girls Women Adults Healthy Hydration-White"
+        }
+      ],
+      "source_query": {
+        "locale": "us",
+        "query": "12 water bottles clear",
+        "query_id": 1901,
+        "split": "train"
+      },
+      "split": "dev",
+      "status": "prepared"
+    },
+    {
+      "id": "esci-budget",
+      "pending_fields": [
+        "final_query_selection",
+        "product_id",
+        "sku_id",
+        "price",
+        "stock",
+        "ships_to"
+      ],
+      "required_checks": [
+        "latest_budget_preserved",
+        "currency_association",
+        "no_constraint_leak"
+      ],
+      "scenario": "budget",
+      "source_products": [
+        {
+          "asin": "B0010ZTKH8",
+          "esci_label": "E",
+          "locale": "es",
+          "title": "Vivanco 2/06-N - Adaptador Jack 6,35 Macho - Jack 3.5 Hembra"
+        }
+      ],
+      "source_query": {
+        "locale": "es",
+        "query": "2 jack hembra sin pérdida",
+        "query_id": 2580,
+        "split": "train"
+      },
+      "split": "dev",
+      "status": "prepared"
+    },
+    {
+      "id": "esci-stock",
+      "pending_fields": [
+        "final_query_selection",
+        "product_id",
+        "sku_id",
+        "price",
+        "stock",
+        "ships_to"
+      ],
+      "required_checks": [
+        "in_stock_only",
+        "no_constraint_leak"
+      ],
+      "scenario": "stock",
+      "source_products": [
+        {
+          "asin": "B01BS3FQFG",
+          "esci_label": "E",
+          "locale": "jp",
+          "title": "(ia5748) ６重層 アンパンマン トレーニングパンツ【２枚組】 トイトレ ANPANMAN イエロー◇95cm"
+        }
+      ],
+      "source_query": {
+        "locale": "jp",
+        "query": "6層トレーニングパンツ",
+        "query_id": 5091,
+        "split": "train"
+      },
+      "split": "dev",
+      "status": "prepared"
+    },
+    {
+      "id": "esci-comparison",
+      "pending_fields": [
+        "final_query_selection",
+        "product_id",
+        "sku_id",
+        "price",
+        "stock",
+        "ships_to"
+      ],
+      "required_checks": [
+        "selected_product_pair",
+        "sku_price_currency_associations",
+        "no_order_on_readonly"
+      ],
+      "scenario": "comparison",
+      "source_products": [
+        {
+          "asin": "B00PUY9DZY",
+          "esci_label": "E",
+          "locale": "us",
+          "title": "US Art Supply 12 X 12 inch Professional Artist Quality Acid Free Canvas Panel Boards for Painting 12-Pack (1 Full Case of 12 Single Canvas Board Panels)"
+        },
+        {
+          "asin": "B072194H55",
+          "esci_label": "E",
+          "locale": "us",
+          "title": "Mont Marte Canvas Panel (pack of 12), 12 X 12 inches, Canvas Panel Great for Students to Professional Artists"
+        }
+      ],
+      "source_query": {
+        "locale": "us",
+        "query": "12x12 primed canvas",
+        "query_id": 2008,
+        "split": "train"
+      },
+      "split": "dev",
+      "status": "prepared"
+    },
+    {
+      "id": "esci-awaiting-confirmation",
+      "pending_fields": [
+        "final_query_selection",
+        "product_id",
+        "sku_id",
+        "price",
+        "stock",
+        "ships_to"
+      ],
+      "required_checks": [
+        "confirmation_prepared",
+        "no_order_before_approval",
+        "inventory_unchanged"
+      ],
+      "scenario": "awaiting_confirmation",
+      "source_products": [
+        {
+          "asin": "B0771BBFMJ",
+          "esci_label": "E",
+          "locale": "es",
+          "title": "Neumático de repuesto para patineta eléctrica E200 E150 de 200 x 50 de Wingsmoto"
+        }
+      ],
+      "source_query": {
+        "locale": "es",
+        "query": "200x50 rueda patinete sin cámara de aire",
+        "query_id": 2842,
+        "split": "train"
+      },
+      "split": "dev",
+      "status": "prepared"
+    },
+    {
+      "id": "esci-approved-order",
+      "pending_fields": [
+        "final_query_selection",
+        "product_id",
+        "sku_id",
+        "price",
+        "stock",
+        "ships_to"
+      ],
+      "required_checks": [
+        "confirmation_prepared",
+        "no_order_before_approval",
+        "approved_order_created",
+        "inventory_decreased_once"
+      ],
+      "scenario": "approved_order",
+      "source_products": [
+        {
+          "asin": "B009AVPIIO",
+          "esci_label": "E",
+          "locale": "jp",
+          "title": "Berkley GJSM14-TSF バスグリッパー Hank's Swimmin Jig ハードベイト テキーラサンライズフラッシュ 1/4オンス"
+        }
+      ],
+      "source_query": {
+        "locale": "jp",
+        "query": "amazon 釣り 用品",
+        "query_id": 8670,
+        "split": "train"
+      },
+      "split": "dev",
+      "status": "prepared"
+    },
+    {
+      "id": "esci-embedding-unavailable",
+      "pending_fields": [
+        "final_query_selection",
+        "product_id",
+        "sku_id",
+        "price",
+        "stock",
+        "ships_to",
+        "independent_train_chinese_translation"
+      ],
+      "required_checks": [
+        "remote_embedding_failure_observed",
+        "local_embedding_used",
+        "no_constraint_leak"
+      ],
+      "scenario": "embedding_unavailable",
+      "source_products": [
+        {
+          "asin": "B0002AS21W",
+          "esci_label": "E",
+          "locale": "us",
+          "title": "Aqueon Aquarium 20 Gallon Long"
+        }
+      ],
+      "source_query": {
+        "locale": "us",
+        "query": "20 gall fish tank",
+        "query_id": 2775,
+        "split": "train"
+      },
+      "split": "dev",
+      "status": "prepared"
+    }
+  ],
+  "input_fingerprints": {
+    "examples.jsonl": "992c2293dd4402a7f51f2aca20b920d55f28edadc63988f3ac4d1362556ae1d5ed52941675f85cf6300255278ee07fe8ff4ec339120f536c3e28845b1b319fdc",
+    "products.jsonl": "eadc9cc3931683119935e9eee4b2d062b550dde65610480280669fd630c05b52538a7d14f304001389e366e09f5549aef47cfda8d02a9c4f767e23b37d718651",
+    "selection-plan.json": "22d2016a2eec7d36edd137a9316f033871a5167c1a3afc579fb11635de6e663d518600b71a674680e12ce388b80b520813a3e9acfd406e200877c5110b0f4b63"
+  },
+  "model_calls": 0,
+  "profile": "dev",
+  "required_artifacts": [
+    "data/catalog-esci-v1.jsonl.gz",
+    "data/esci/selection-v1.json",
+    "eval/esci/ranking-dev.jsonl",
+    "独立 train 中文译文缓存",
+    "显式 esci-v1 开发合同与真实目录工作流"
+  ],
+  "runnable": false,
+  "schema_version": "esci-harness-preparation-v1",
+  "source_scope": "ESCI train 预选；最终抽样尚未完成",
+  "status": "prepared"
+}

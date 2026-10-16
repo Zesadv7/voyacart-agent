@@ -1,0 +1,50 @@
+# R1 独立压测项目，沿用 scale 拓扑；运行环境变量与每档源码写入证据。
+services:
+  api:
+    extends:
+      file: docker-compose.scale.yaml
+      service: api
+    image: ${VOYACART_LOAD_IMAGE:-voyacart-runtime:r1}
+    environment:
+      OPENSSL_armcap: "0"
+      SEMANTIC_CACHE_ENABLED: "0"
+      LLM_MAX_CONCURRENCY: "10000"
+      LLM_MIN_INTERVAL_SECONDS: "0"
+      LLM_FALLBACK_MODEL: ""
+      QUEUE_WAIT_SECONDS: "300"
+  worker:
+    extends:
+      file: docker-compose.scale.yaml
+      service: worker
+    image: ${VOYACART_LOAD_IMAGE:-voyacart-runtime:r1}
+    environment:
+      OPENSSL_armcap: "0"
+      WORKER_CONCURRENCY: "2"
+      SEMANTIC_CACHE_ENABLED: "0"
+      LLM_MAX_CONCURRENCY: "10000"
+      LLM_MIN_INTERVAL_SECONDS: "0"
+      LLM_FALLBACK_MODEL: ""
+  nginx:
+    extends:
+      file: docker-compose.scale.yaml
+      service: nginx
+    image: voyacart-frontend:load
+    ports: !override
+      - "127.0.0.1:${VOYACART_LOAD_PORT:-8085}:80"
+  redis:
+    extends:
+      file: docker-compose.scale.yaml
+      service: redis
+  qdrant:
+    extends:
+      file: docker-compose.scale.yaml
+      service: qdrant
+  mock-llm:
+    extends:
+      file: docker-compose.scale.yaml
+      service: mock-llm
+    image: voyacart-runtime:r1
+volumes:
+  app-data:
+  redis-data:
+  qdrant-data:
