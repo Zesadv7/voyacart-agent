@@ -140,6 +140,7 @@ async def run_profile(profile, output, *, suite_path=None, strategies=None, case
     with tarfile.open(output/'source.tar.gz','w:gz') as archive:
         for name in frozen['files']:archive.add(ROOT/name,arcname=name,recursive=False)
     manifest={'schema_version':SCHEMA_VERSION,'run_id':datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'-'+uuid.uuid4().hex[:8],
+      'github_sha':os.environ.get('GITHUB_SHA'),
       'status':'running','profile':actual_profile,'requested_profile':profile,'cases':ids,'strategies':names,
       'repetitions':selected['repetitions'],'model':settings.llm_model,'gateway_sha256':digest(settings.llm_base_url.encode()),
       'runtime':runtime,'execution_environment':execution_environment(settings),

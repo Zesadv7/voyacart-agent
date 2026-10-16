@@ -9,7 +9,7 @@ GLM_MODEL = 'glm-5.3-flash'
 GLM_BASE_URL = 'https://open.bigmodel.cn/api/paas/v4'
 GLM_CODING_URL = 'https://open.bigmodel.cn/api/coding/paas/v4'
 ENDPOINT_MODES = ('standard', 'coding_plan')
-PROFILES = ('config-check', 'preflight', 'smoke', 'dev', 'release')
+PROFILES = ('config-check', 'preflight', 'smoke', 'dev', 'release', 'full-functional')
 
 
 def classify_endpoint(value):
@@ -29,7 +29,7 @@ def inspect_configuration(environ, endpoint_mode='standard', profile='config-che
     if profile not in PROFILES:
         issues.append('invalid_profile')
     # 原有其它 provider 的标准评测配置保持不变；本诊断不声称验证其服务能力。
-    other_provider = (model_status == 'other' and profile != 'config-check' and
+    other_provider = (model_status == 'other' and profile not in ('config-check','full-functional') and
                       endpoint_mode == 'standard' and actual != 'coding_plan')
     if not key_present:
         issues.append('api_key_not_configured')

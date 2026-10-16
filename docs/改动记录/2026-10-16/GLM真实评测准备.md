@@ -84,3 +84,15 @@
 - 此阶段没有模型调用、没有新模型参数或放宽契约。与已发布的Redis安装修复配套，仍要求完整零跳过安全契约及独立真实smoke；不导入或伪造旧job结果。
 
 - 完整同Coding Plan套件离线验证：1484 passed，0 failures / 0 errors / 0 skipped，121.84秒；使用官方Redis7.4.11临时编译版，父配置保持不变，详见 `eval/verification/2026-10-16-glm-contract-env/full-suite/verification.json`、contracts.log/xml。不使用真实API凭据，未执行模型；新的 `scripts/ci/offline_env.py` 依赖也纳入源码指纹、源码归档及Harness影响判定。
+
+
+## 一次手动启动完整功能矩阵（full-functional）
+
+- 需求：用户明确继续 Coding Plan，先不计算 token/金额收益，希望一次启动完成全部功能验证。已有 [smoke 38877836503](https://github.com/Zesadv7/voyacart-agent/actions/runs/38877836503) 在 `92724db` 上12/12通过，smoke29次+预检8次=37个真实请求；内部1484安全合同0失败/0跳过。本次不重复smoke、不声称正式收益发布通过。
+- 新增独立 `full-functional` 工作流选项：先执行一次8请求预检，再完整 dev（15场景×2策略×2次=60实例，上限600请求），成功且证据校验通过后由独立job完整执行留出 release 数据（33场景×2策略×3次=198实例，上限3000请求）。合计48独立场景、258实例，单次工作流尝试物理调用硬上限3608；不并行、不自动重跑，供应商拒绝/预算耗尽/阶段失败即停止后续。
+- 两个模型job均安装Redis，内部完整契约使用隔离子进程；不存在跳过或伪造前置契约。后续job只下载当前run与attempt固定名称产物，并在任何模型调用前核对GitHub SHA、源码指纹/归档、冻结suite/数据/模型/网关哈希、dev矩阵与请求上限。preflight补充同样的非凭据指纹；原始URL或key不进入阶段汇总。
+- 功能通过要求完整矩阵、全部场景与安全合同通过、身份/工具协议无未知或违规、原有普通轮P95阈值不放宽。用量缺失或账单未知不伪造；最终独立汇总明确 `cost_benefit_status=not_evaluated`、`production_deploy_authorized=false`。原 `release` 档仍执行 `--require-benefit`，其发布收益门禁完全保留；full-functional使用留出数据不等于正式release收益验收。
+- 付费手动工作流跨分支共用串行组；push/PR离线任务不再占其槽，零调用config-check也单独分组。保持原有预算勾选、显式端点、无fallback，不更改任何Secrets或权限。
+- 规模：本次smoke12实例业务执行约6分08秒，线性外推258实例约2小时12分，仅用于说明量级；长上下文和供应商响应可能更慢，不能保证。dev和holdout各自180分钟超时；失败/取消的已调用用量仍保留。
+- 启用：Actions新建运行，main / full-functional / coding_plan / 勾批准预算，只点击一次。报告分别保留第一阶段与最终全阶段artifact；不会部署或切换生产默认。回滚本阶段补丁恢复原分档入口，既有完整smoke与失败证据必须保留。
+- 实装离线验收：阶段证据/配置/工作流/runner 联测166 passed（12.33秒）；同Coding Plan套件内部完整安全合同1538 passed、0失败/0错误/0跳过（122.52秒，官方Redis7.4.11，隔离子进程）。阶段校验53项覆盖未知token允许但未知身份/协议拒绝、跨SHA/网关/数据混用拒绝、预算和矩阵缺失拒绝、P95未达标拒绝、错误固定枚举不泄密。原始日志/XML与验证JSON保留于 `eval/verification/2026-10-16-full-functional/`。已跟踪文件及新增模块离线高置信度凭据扫描0发现；真实full-functional尚待用户一次手动启动，后台全量CI不作为此次入口发布等待条件。

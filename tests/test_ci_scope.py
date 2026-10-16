@@ -56,3 +56,39 @@ def test_model_job_installs_redis_before_paid_requests_for_full_profiles_only():
     assert '--skip-contracts' not in steps[run]['run']
     assert 'safety-contracts' in job['needs']
     assert 'approve_model_budget' in job['if']
+
+
+def test_full_functional_workflow_is_sequential_bounded_and_separate_from_release():
+    from pathlib import Path
+    import yaml
+    workflow=yaml.safe_load(Path('.github/workflows/harness-eval.yml').read_text())
+    events=workflow.get('on',workflow.get(True))
+    assert 'full-functional' in events['workflow_dispatch']['inputs']['profile']['options']
+    assert '${{ github.event_name }}' in workflow['concurrency']['group']
+    assert "inputs.profile == 'config-check' && 'configuration' || 'paid'" in workflow['concurrency']['group']
+    assert workflow['concurrency']['cancel-in-progress'] is False
+    first=workflow['jobs']['model-evaluation']
+    run=next(s for s in first['steps'] if s.get('name')=='Real model evaluation')
+    assert "inputs.profile == 'full-functional' && 'dev'" in run['env']['HARNESS_PROFILE']
+    assert 'if [ "$HARNESS_PROFILE" = release ]' in run['run']
+    assert '--profile release --output eval/verification/ci-model --require-benefit' in run['run']
+    check=next(i for i,s in enumerate(first['steps']) if s.get('name')=='Validate full-functional development stage')
+    upload=next(i for i,s in enumerate(first['steps']) if s.get('name')=='Preserve HTML and raw failures')
+    assert check<upload and first['steps'][check]['if']=="inputs.profile == 'full-functional'"
+    last=workflow['jobs']['full-functional-holdout']
+    assert last['needs']=='model-evaluation'
+    assert 'workflow_dispatch' in last['if'] and 'approve_model_budget' in last['if'] and 'always()' not in last['if']
+    assert last['timeout-minutes']==180 and last['env']['LLM_FALLBACK_MODEL']==''
+    steps=last['steps']
+    download=next(i for i,s in enumerate(steps) if s.get('uses')=='actions/download-artifact@v4')
+    assert steps[download]['with']['name']=='harness-model-${{ github.run_id }}-${{ github.run_attempt }}'
+    assert 'github-token' not in steps[download]['with'] and 'run-id' not in steps[download]['with']
+    verify=next(i for i,s in enumerate(steps) if s.get('name')=='Verify prior stage before any holdout model request')
+    evaluate=next(i for i,s in enumerate(steps) if s.get('name')=='Complete frozen holdout functionality')
+    redis=next(i for i,s in enumerate(steps) if 'apt-get install -y redis-server' in s.get('run',''))
+    assert download<verify<evaluate and redis<evaluate
+    assert '--profile release' in steps[evaluate]['run'] and '--require-benefit' not in steps[evaluate]['run']
+    assert '--skip-contracts' not in steps[evaluate]['run']
+    assert not any('scripts.model_preflight' in s.get('run','') for s in steps)
+    assert not any('continue-on-error' in s for s in steps)
+    assert any('--holdout eval/verification/ci-model' in s.get('run','') and s.get('if')=='always()' for s in steps)

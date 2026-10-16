@@ -167,7 +167,8 @@
     "tests/test_queue_reliability.py",
     "tests/test_queue_retention.py",
     "tests/test_bounded_recovery_probe.py",
-    "tests/test_glm_evaluation.py"
+    "tests/test_glm_evaluation.py",
+    "tests/test_functional_evaluation.py"
   ],
   "runtime": {
     "concurrency": 1,

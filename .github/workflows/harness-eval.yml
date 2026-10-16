@@ -14,7 +14,7 @@ on:
         default: false
       profile:
         type: choice
-        options: [config-check, preflight, smoke, dev, release]
+        options: [config-check, preflight, smoke, dev, release, full-functional]
         default: config-check
       endpoint_mode:
         description: '显式选择 standard 标准 API 或 coding_plan 套餐端点；不自动切换'
@@ -26,7 +26,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: harness-${{ github.ref }}
+  group: harness-${{ github.event_name == 'workflow_dispatch' && (inputs.profile == 'config-check' && 'configuration' || 'paid') || github.ref }}-${{ github.event_name }}
   cancel-in-progress: false
 
 jobs:
@@ -164,7 +164,7 @@ jobs:
       - name: Real model evaluation
         if: inputs.profile != 'preflight'
         env:
-          HARNESS_PROFILE: ${{ inputs.profile || 'smoke' }}
+          HARNESS_PROFILE: ${{ inputs.profile == 'full-functional' && 'dev' || inputs.profile || 'smoke' }}
         run: |
           suite_args=()
           if [ "$LLM_MODEL" = glm-5.3-flash ]; then
@@ -180,6 +180,15 @@ jobs:
             uv run python -m scripts.eval.harness run "${suite_args[@]}" --profile "$HARNESS_PROFILE" --output eval/verification/ci-model
           fi
           uv run python -m scripts.eval.harness verify eval/verification/ci-model
+      - name: Validate full-functional development stage
+        if: inputs.profile == 'full-functional'
+        run: |
+          case "$ENDPOINT_MODE" in
+            standard) suite=eval/harness/v1/glm-5.3-flash-suite.json ;;
+            coding_plan) suite=eval/harness/v1/glm-5.3-flash-coding-plan-suite.json ;;
+            *) exit 2 ;;
+          esac
+          uv run python -m scripts.eval.harness.functional --suite "$suite" --prior eval/verification --output eval/verification/full-functional-dev.json
       - name: Preserve HTML and raw failures
         if: always()
         uses: actions/upload-artifact@v4
@@ -188,4 +197,71 @@ jobs:
           path: |
             eval/verification/ci-model
             eval/verification/ci-preflight
+            eval/verification/full-functional-dev.json
+          retention-days: 30
+
+  full-functional-holdout:
+    name: Full functional holdout (no cost-benefit claim)
+    needs: model-evaluation
+    if: github.event_name == 'workflow_dispatch' && inputs.profile == 'full-functional' && inputs.approve_model_budget
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      LLM_BASE_URL: ${{ secrets.HARNESS_LLM_BASE_URL }}
+      LLM_API_KEY: ${{ secrets.HARNESS_LLM_API_KEY }}
+      LLM_MODEL: ${{ vars.HARNESS_LLM_MODEL }}
+      ENDPOINT_MODE: ${{ inputs.endpoint_mode || 'standard' }}
+      LLM_FALLBACK_MODEL: ''
+      REDIS_URL: ''
+      LANGFUSE_SECRET_KEY: ''
+      LANGFUSE_PUBLIC_KEY: ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.12.23'
+      - run: uv sync --frozen
+      - name: Install Redis for holdout safety contracts
+        run: sudo apt-get update && sudo apt-get install -y redis-server
+      - name: Download this run and attempt's development evidence
+        uses: actions/download-artifact@v4
+        with:
+          name: harness-model-${{ github.run_id }}-${{ github.run_attempt }}
+          path: eval/verification/full-functional-prior
+      - name: Freeze selected suite
+        id: suite
+        run: |
+          case "$ENDPOINT_MODE" in
+            standard) suite=eval/harness/v1/glm-5.3-flash-suite.json ;;
+            coding_plan) suite=eval/harness/v1/glm-5.3-flash-coding-plan-suite.json ;;
+            *) exit 2 ;;
+          esac
+          echo "path=$suite" >> "$GITHUB_OUTPUT"
+      - name: Verify prior stage before any holdout model request
+        env:
+          SUITE: ${{ steps.suite.outputs.path }}
+        run: uv run python -m scripts.eval.harness.functional --suite "$SUITE" --prior eval/verification/full-functional-prior
+      - name: Complete frozen holdout functionality
+        env:
+          SUITE: ${{ steps.suite.outputs.path }}
+        run: |
+          uv run python -m scripts.eval.harness run --suite "$SUITE" --profile release --output eval/verification/ci-model
+          uv run python -m scripts.eval.harness verify eval/verification/ci-model
+      - name: Summarize functionality separately from cost benefit
+        if: always()
+        env:
+          SUITE: ${{ steps.suite.outputs.path }}
+        run: uv run python -m scripts.eval.harness.functional --suite "$SUITE" --prior eval/verification/full-functional-prior --holdout eval/verification/ci-model --output eval/verification/full-functional-summary.json
+      - name: Preserve all stage evidence and failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-full-functional-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            eval/verification/ci-model
+            eval/verification/full-functional-prior
+            eval/verification/full-functional-summary.json
           retention-days: 30

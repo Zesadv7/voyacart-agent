@@ -4,6 +4,7 @@ import asyncio
 from dataclasses import replace
 from html import escape
 import json
+import os
 from pathlib import Path
 from agentscope.message import SystemMsg, UserMsg, Msg, TextBlock, ToolCallBlock, ToolResultBlock, ToolResultState
 from agentscope.tool import ToolChoice
@@ -11,7 +12,7 @@ from app.infrastructure.context_usage import context_usage_sink
 from app.infrastructure.llm import create_chat_model
 from app.infrastructure.settings import load_settings
 from app.infrastructure.throttle import GatewayThrottle
-from scripts.eval.harness.contracts import assert_output_path, write_json, source_manifest, load_suite
+from scripts.eval.harness.contracts import assert_output_path, write_json, source_manifest, load_suite, digest
 from scripts.eval.harness.model_config import (
     configure_evaluation_model, validate_model_config, ModelCallBudget, model_call_budget,
 )
@@ -20,7 +21,8 @@ from scripts.eval.harness.model_config import (
 async def run(output, suite_path=None):
     output=assert_output_path(output);output.mkdir(parents=True)
     settings=replace(load_settings(),llm_fallback_model='',llm_max_retries=0,prompt_cache_mode='passthrough')
-    runtime = load_suite(suite_path)['runtime'] if suite_path else {
+    suite = load_suite(suite_path) if suite_path else None
+    runtime = suite['runtime'] if suite else {
         'output_limit':256, 'request_timeout_seconds':45}
     validate_model_config(settings, runtime)
     budget = ModelCallBudget(8)
@@ -83,6 +85,9 @@ async def run(output, suite_path=None):
         if rows[-1]['error']:
             break
     report={'requested_model':settings.llm_model,'passed':len(rows)==6 and all(r['passed'] for r in rows),
+        'github_sha':os.environ.get('GITHUB_SHA'),'gateway_sha256':digest(settings.llm_base_url.encode()),
+        'suite_sha256':suite['_suite_sha256'] if suite else None,
+        'dataset_sha256':suite['_dataset_sha256'] if suite else None,
         'source_sha256':source,'source_stable':source_manifest()['sha256']==source,'calls':len(rows),
         'physical_calls_started':budget.started,'physical_call_limit':budget.limit,'runtime':runtime,
         'usage_known':bool(rows) and all(r['usage_known'] for r in rows),'billing_verified':False,

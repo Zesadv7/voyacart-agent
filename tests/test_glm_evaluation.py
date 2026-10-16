@@ -171,9 +171,15 @@ async def test_preflight_uses_eight_bounded_requests_and_retains_reasoning(tmp_p
     monkeypatch.setattr(model_preflight,'load_settings',lambda:s)
     monkeypatch.setattr(model_preflight,'create_chat_model',factory)
     out=tmp_path/'preflight'
+    monkeypatch.setenv('GITHUB_SHA','a'*40)
     assert await model_preflight.run(out,suite)==0
     summary=json.loads((out/'summary.json').read_text())
     assert summary['physical_calls_started']==8 and summary['tools_executed']==0
+    from scripts.eval.harness.contracts import digest
+    assert summary['github_sha']=='a'*40
+    assert summary['gateway_sha256']==digest(base_url.encode())
+    assert summary['suite_sha256']==load_suite(suite)['_suite_sha256']
+    assert summary['dataset_sha256']==load_suite(suite)['_dataset_sha256']
     assert summary['usage_known'] is include_usage and summary['billing_verified'] is False
     roundtrips=[b for b in seen if any(m['role']=='tool' for m in b['messages'])]
     assert len(roundtrips)==2
@@ -369,3 +375,17 @@ async def test_nested_contracts_isolate_synthetic_glm_environment(tmp_path,monke
     assert env['LLM_MODEL']==GLM_MODEL and env['LLM_BASE_URL']==GLM_CODING_URL
     assert env['LLM_API_KEY']=='synthetic-parent-key-canary'
     assert env['DATA_DIR']==str(tmp_path/'parent-data')
+
+
+def test_full_functional_profile_has_exact_existing_matrix_and_budget():
+    from scripts.eval.endpoint_config import inspect_configuration
+    s=load_suite(CODING_SUITE)
+    assert len(s['profiles']['dev']['cases'])*2*s['profiles']['dev']['repetitions']==60
+    assert len(s['profiles']['release']['cases'])*2*s['profiles']['release']['repetitions']==198
+    assert len(set(s['profiles']['dev']['cases'])|set(s['profiles']['release']['cases']))==48
+    assert 8+s['profiles']['dev']['max_model_calls']+s['profiles']['release']['max_model_calls']==3608
+    env={'LLM_BASE_URL':GLM_CODING_URL,'LLM_MODEL':GLM_MODEL,'HARNESS_KEY_CONFIGURED':'true'}
+    assert inspect_configuration(env,'coding_plan','full-functional')['configuration_matches']
+    env.update(LLM_MODEL='other',LLM_BASE_URL='https://example.invalid/v1')
+    assert not inspect_configuration(env,'standard','full-functional')['configuration_matches']
+    assert inspect_configuration(env,'standard','smoke')['configuration_matches']
