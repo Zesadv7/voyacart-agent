@@ -39,3 +39,20 @@ def test_safety_contract_job_installs_real_redis_instead_of_allowing_skips():
     contracts = next(i for i, command in enumerate(commands) if '--profile contracts' in command)
     assert install < contracts
     assert 'continue-on-error' not in workflow['jobs']['safety-contracts']
+
+
+def test_model_job_installs_redis_before_paid_requests_for_full_profiles_only():
+    from pathlib import Path
+    import yaml
+    workflow = yaml.safe_load(Path('.github/workflows/harness-eval.yml').read_text())
+    job = workflow['jobs']['model-evaluation']
+    steps = job['steps']
+    install = next(i for i, step in enumerate(steps) if 'apt-get install -y redis-server' in step.get('run', ''))
+    preflight = next(i for i, step in enumerate(steps) if 'scripts.model_preflight' in step.get('run', ''))
+    run = next(i for i, step in enumerate(steps) if step.get('name') == 'Real model evaluation')
+    assert install < preflight < run
+    assert steps[install]['if'] == "inputs.profile != 'preflight'"
+    assert 'continue-on-error' not in steps[install]
+    assert '--skip-contracts' not in steps[run]['run']
+    assert 'safety-contracts' in job['needs']
+    assert 'approve_model_budget' in job['if']

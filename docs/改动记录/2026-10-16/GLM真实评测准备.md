@@ -65,3 +65,12 @@
 - 验证范围为 GLM 实际 SDK MockTransport 的流式/非流式、正常文本及恶意意外工具响应、其它 provider 保持原 none 参数、八请求工具往返和既有协议/公开输出/CI安全契约。新真实预检须由用户启动新运行；不重跑旧失败，不以离线通过声称真实预检通过。
 - 本地定向结果：132 passed / 5.34 秒；原始日志/XML 为 `eval/verification/2026-10-16-glm-none-tools/focused.*`，独立静态审查未发现权限放宽。完整后台 CI 和新真实预检尚待执行。
 - 启用仍选 main / preflight / coding_plan 并批准预算。回滚本段相关提交恢复 v1 none 请求形状；保留本次真实失败证据，且禁止将旧失败当 v2 结果。
+
+
+## smoke 启动前补齐独立 job 的 Redis 依赖
+
+- v2 [真实预检 38874052873](https://github.com/Zesadv7/voyacart-agent/actions/runs/38874052873) 已通过：8次物理请求、流/非流共6种工具选择模式、两次合成工具结果续答；实际业务工具执行0，累计1034输入/713输出tokens，费用与套餐扣量未知。证据保留于 `eval/verification/2026-10-16-glm-preflight-38874052873/`。
+- smoke 启动前发现既有 workflow 缺陷：runner 在模型 job 内再次执行完整契约，该 job 没有 redis-server；前置安全 job 的安装不能跨机器共享，队列可靠性测试会跳过，导致 `contract_checks_failed`。此前成功的 preflight 没有运行这些内部契约，不能证明 smoke 基础设施就绪。
+- 仅为 `profile != preflight` 的模型 job 补官方 Ubuntu 包 redis-server 安装，并置于任何模型请求之前；安装失败即停，不降低 skipped==0、不伪造复用契约。暂保留重复契约，入口去重另行优化，不把功能修复扩成新框架。
+- 工作流/GLM/CI环境定向测试56 passed / 4.02秒，日志/XML见 `eval/verification/2026-10-16-glm-smoke-redis/focused.*`；覆盖安装先于 preflight/完整评测、preflight 不安装、预算批准和前置契约保留、禁止跳过内部契约。不会触发模型或改用户配置；新版本完整后台CI与smoke待执行。
+- 启用：main / smoke / coding_plan / 批准预算；6场景×2策略×1次为12实例，smoke本体最多150请求，前置preflight另8次，一次dispatch合计最多158。仍不自动release。回滚此修复会恢复模型job缺Redis的风险。
