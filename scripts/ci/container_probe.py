@@ -9,6 +9,8 @@ import argparse
 import json
 from pathlib import Path
 import sqlite3
+import shutil
+import tempfile
 
 import httpx
 
@@ -174,11 +176,18 @@ def index() -> dict:
 
 def original_preserved() -> dict:
     fixture = load_fixture()
-    original = ORIGINAL
-    with sqlite3.connect(f'file:{original / "voyacart.db"}?mode=ro', uri=True) as db:
-        row = db.execute('SELECT status FROM orders WHERE order_id=?', (fixture['order']['order_id'],)).fetchone()
-        assert row == ('CANCELLED',), row
-    assert inventory(original) == fixture['original_inventory']
+    # 已停写原卷保持只读。WAL 库的 mode=ro 仍可能创建 -shm/-wal，
+    # 因此连同已有 sidecar 复制到可写临时目录，只在副本查询，不忽略已提交 WAL。
+    with tempfile.TemporaryDirectory(prefix='voyacart-original-check-') as directory:
+        original = Path(directory)
+        for name in ('voyacart.db', 'voyacart.db-wal', 'voyacart.db-shm'):
+            source = ORIGINAL / name
+            if name == 'voyacart.db' or source.exists():
+                shutil.copyfile(source, original / name)
+        with sqlite3.connect(f'file:{original / "voyacart.db"}?mode=ro', uri=True) as db:
+            row = db.execute('SELECT status FROM orders WHERE order_id=?', (fixture['order']['order_id'],)).fetchone()
+            assert row == ('CANCELLED',), row
+        assert inventory(original) == fixture['original_inventory']
     assert inventory(DATA) == fixture['original_inventory'] - 1
     return {'source_volume_unchanged_after_restore': True, 'post_snapshot_mutation_absent_in_restored_volume': True}
 

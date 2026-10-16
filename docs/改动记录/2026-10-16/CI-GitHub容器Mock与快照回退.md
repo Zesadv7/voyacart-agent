@@ -33,3 +33,11 @@
 演练仅支持同镜像的数据快照回退，不证明跨版本 schema/旧协议回滚；不验证真实模型、Redis/worker 多副本、前端容器、容量或生产 RPO/RTO。快照之后的变更被保留在原卷、不会出现在恢复卷，不能声称 RPO=0。
 
 关联版本：以包含本记录的 `ci: add hosted mock container lifecycle and snapshot rollback` 提交为准；GitHub 对应公开快照提交与运行编号另记于该次 Actions 结果。
+
+## 首次 GitHub 运行与修复
+
+- 首次公开提交 `bbd8caa` 的安全契约 job 实际执行 1,348 项通过、99 项因缺少 `redis-server` 跳过，严格门禁判失败；保留 run `38851030382`，不将跳过计为通过。
+- 给安全契约 job 补与后端回归一致的官方 Ubuntu `redis-server` 安装步骤，保留原有完整性门禁；修复后结果以新提交的 Actions 为准。
+- 首次容器 run `38851030312` 在最后原卷保留探针失败：只读挂载的 SQLite WAL 库需要 sidecar 写入；此前构建、启动健康、签名 HTTP、restart/recreate、停写快照、新卷恢复与同镜像回退已执行，但整条 workflow 判失败。
+- 修复仅将已停写原卷的 DB 与现存 WAL/SHM 复制到临时可写目录查询；原卷继续只读，不忽略 WAL、不改业务恢复逻辑。新增回归覆盖已 checkpoint 与保留 committed WAL 两种状态，并核对源文件指纹/权限不变。
+- 本地修复验证：CI 配置合同 15 项通过；两项只读/WAL 新回归与真实 loopback 全链探针共 3 项通过（55.40 秒），9 项与本轮探针修复无关的容器单测未在该定向命令选择。GitHub 容器复测尚待新提交运行。

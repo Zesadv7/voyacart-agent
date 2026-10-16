@@ -3,6 +3,9 @@ from __future__ import annotations
 
 from contextlib import ExitStack
 import json
+import hashlib
+import shutil
+import sqlite3
 from pathlib import Path
 
 import httpx
@@ -190,3 +193,65 @@ def test_timeout_preserves_partial_log(tmp_path, monkeypatch):
         driver.Docker({}, 'ci-unit', tmp_path).command(['build', '.'], timeout=1)
     log = (tmp_path / '01-build.log').read_text()
     assert 'partial stdout' in log and 'partial stderr' in log and 'timed out' in log
+
+
+@pytest.mark.parametrize('retained_wal', [False, True], ids=['checkpointed', 'committed-wal'])
+def test_original_preserved_reads_readonly_source_without_modifying_it(monkeypatch, tmp_path, retained_wal):
+    """只读来源既覆盖缺 sidecar 的 WAL 库，也覆盖最新提交仍在 WAL 中的停写副本。"""
+    original, restored = tmp_path / 'original', tmp_path / 'restored'
+    original.mkdir()
+    restored.mkdir()
+    seed = tmp_path / 'seed.db'
+    connection = sqlite3.connect(seed)
+    try:
+        connection.execute('PRAGMA journal_mode=WAL')
+        connection.execute('PRAGMA wal_autocheckpoint=0')
+        connection.execute('CREATE TABLE orders (order_id TEXT, status TEXT)')
+        connection.execute('CREATE TABLE trade_sku_inventory (sku_id TEXT, stock INTEGER)')
+        connection.execute("INSERT INTO orders VALUES ('synthetic-order', 'CONFIRMED')")
+        connection.execute("INSERT INTO trade_sku_inventory VALUES ('P1001-S1', 7)")
+        connection.commit()
+        connection.execute('PRAGMA wal_checkpoint(TRUNCATE)')
+        connection.execute("UPDATE orders SET status='CANCELLED'")
+        connection.execute('UPDATE trade_sku_inventory SET stock=8')
+        connection.commit()
+        if retained_wal:
+            assert Path(str(seed) + '-wal').stat().st_size > 0
+            # 快照来源没有活动连接；seed 连接在复制期间不再写入。
+            for suffix in ('', '-wal', '-shm'):
+                shutil.copyfile(Path(str(seed) + suffix), original / ('voyacart.db' + suffix))
+            # 证明仅 DB 不包含最新取消；丢弃 WAL 的伪修复必须失败。
+            shutil.copyfile(seed, tmp_path / 'without-wal.db')
+            with sqlite3.connect(tmp_path / 'without-wal.db') as old:
+                assert old.execute('SELECT status FROM orders').fetchone() == ('CONFIRMED',)
+        else:
+            connection.close()
+            shutil.copyfile(seed, original / 'voyacart.db')
+            assert not (original / 'voyacart.db-wal').exists()
+    finally:
+        connection.close()
+    with sqlite3.connect(restored / 'voyacart.db') as db:
+        db.execute('CREATE TABLE trade_sku_inventory (sku_id TEXT, stock INTEGER)')
+        db.execute("INSERT INTO trade_sku_inventory VALUES ('P1001-S1', 7)")
+    fixture = {'order': {'order_id': 'synthetic-order'}, 'original_inventory': 8}
+    monkeypatch.setattr(probe, 'ORIGINAL', original)
+    monkeypatch.setattr(probe, 'DATA', restored)
+    monkeypatch.setattr(probe, 'load_fixture', lambda: fixture)
+    def fingerprints():
+        return {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in original.iterdir()}
+    before = fingerprints()
+    for path in original.iterdir():
+        path.chmod(0o444)
+    original.chmod(0o555)
+    try:
+        assert probe.original_preserved() == {
+            'source_volume_unchanged_after_restore': True,
+            'post_snapshot_mutation_absent_in_restored_volume': True,
+        }
+        assert fingerprints() == before
+        assert original.stat().st_mode & 0o222 == 0
+        assert all(path.stat().st_mode & 0o222 == 0 for path in original.iterdir())
+    finally:
+        original.chmod(0o755)
+        for path in original.iterdir():
+            path.chmod(0o644)
