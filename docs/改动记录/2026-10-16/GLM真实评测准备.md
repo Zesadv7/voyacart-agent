@@ -74,3 +74,13 @@
 - 仅为 `profile != preflight` 的模型 job 补官方 Ubuntu 包 redis-server 安装，并置于任何模型请求之前；安装失败即停，不降低 skipped==0、不伪造复用契约。暂保留重复契约，入口去重另行优化，不把功能修复扩成新框架。
 - 工作流/GLM/CI环境定向测试56 passed / 4.02秒，日志/XML见 `eval/verification/2026-10-16-glm-smoke-redis/focused.*`；覆盖安装先于 preflight/完整评测、preflight 不安装、预算批准和前置契约保留、禁止跳过内部契约。不会触发模型或改用户配置；新版本完整后台CI与smoke待执行。
 - 启用：main / smoke / coding_plan / 批准预算；6场景×2策略×1次为12实例，smoke本体最多150请求，前置preflight另8次，一次dispatch合计最多158。仍不自动release。回滚此修复会恢复模型job缺Redis的风险。
+
+
+## 同进程离线契约隔离真实模型环境
+
+- [旧版本 smoke 38875399271](https://github.com/Zesadv7/voyacart-agent/actions/runs/38875399271) 在 Redis 修复发布前按 `9f86cb3` 启动，08:48:21 UTC 失败结束。前置预检8次通过；smoke本体模型请求0，内层契约1483项中1381通过、99跳过、3失败。99跳过来自缺Redis；3失败来自测试继承 `LLM_MODEL=glm-5.3-flash` 后误用默认假模型套件，触发显式配置校验。不能将整个失败归因于API或余额。原始产物保留在 `eval/verification/2026-10-16-glm-smoke-38875399271/`。
+- `contract_checks` 复用已有 `scripts.ci.offline_env.isolated_env`，对子进程启用临时数据目录、假模型、回环不可用地址、占位密钥与禁用.env，并固定隔离Redis测试使用回环TCP；不继承真实供应商凭据、代理、追踪和模型设置。父进程os.environ不改变，真实评测仍按用户冻结的模型/网关运行。
+- 修复前用合成GLM环境复现相同3个失败，保留 `eval/verification/2026-10-16-glm-contract-env/reproduced.*`；修复后定向121项通过，含真实子进程执行54项runner测试、父环境不变和凭据canary不出现在日志。日志/XML保留在同目录 focused/final 文件；这不等于真实smoke通过。
+- 此阶段没有模型调用、没有新模型参数或放宽契约。与已发布的Redis安装修复配套，仍要求完整零跳过安全契约及独立真实smoke；不导入或伪造旧job结果。
+
+- 完整同Coding Plan套件离线验证：1484 passed，0 failures / 0 errors / 0 skipped，121.84秒；使用官方Redis7.4.11临时编译版，父配置保持不变，详见 `eval/verification/2026-10-16-glm-contract-env/full-suite/verification.json`、contracts.log/xml。不使用真实API凭据，未执行模型；新的 `scripts/ci/offline_env.py` 依赖也纳入源码指纹、源码归档及Harness影响判定。

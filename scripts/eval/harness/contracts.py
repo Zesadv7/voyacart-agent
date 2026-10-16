@@ -37,7 +37,7 @@ WATCHED = ('app/application/agents/', 'app/application/harness/', 'app/applicati
            'app/application/usecases/confirmation_service.py', 'app/infrastructure/persistence/sql/trade',
            'app/presentation/identity', 'tests/test_identity', 'tests/test_request_limits',
            'tests/test_public_output', 'tests/test_orchestrator_output', 'tests/test_prepare_request',
-           'tests/test_secret_scan', 'scripts/ci/secret_scan.py',
+           'tests/test_secret_scan', 'scripts/ci/secret_scan.py', 'scripts/ci/offline_env.py',
            'app/infrastructure/candidate_workspace.py', 'app/application/usecases/candidate_workspace.py',
            'app/presentation/candidate_workspace.py', 'tests/test_candidate_',
            'app/infrastructure/persistence/catalog_identity.py', 'app/infrastructure/vector/',
@@ -77,7 +77,7 @@ def write_json(path, value):
 def source_manifest(root=ROOT):
     files = [p for directory in ('app', 'scripts/eval', 'tests') for p in (root / directory).rglob('*.py')]
     files += [root / 'configs/models.yaml', root / 'pyproject.toml', root / 'uv.lock', root / 'Makefile', root / '.github/workflows/harness-eval.yml']
-    files += [root / 'scripts/model_preflight.py', root / 'scripts/learning.py', root / 'scripts/ci/secret_scan.py', root / 'scripts/ci/bounded_recovery_probe.py']
+    files += [root / 'scripts/model_preflight.py', root / 'scripts/learning.py', root / 'scripts/ci/secret_scan.py', root / 'scripts/ci/offline_env.py', root / 'scripts/ci/bounded_recovery_probe.py']
     files += [root / 'scripts/catalog_preflight.py', root / 'scripts/sync_product_vectors.py']
     files += list((root / 'configs/catalogs').glob('*.json'))
     files += list((root / 'eval/harness/esci-v2').glob('*.jsonl'))

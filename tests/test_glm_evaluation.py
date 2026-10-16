@@ -346,3 +346,26 @@ async def test_other_provider_none_keeps_declared_tools(tmp_path):
         await model(messages(),tools=declared,tool_choice=ToolChoice(mode='none'))
         assert seen[0]['tools']==declared and seen[0]['tool_choice']=='none'
     finally:await model.client.close()
+
+
+@pytest.mark.asyncio
+async def test_nested_contracts_isolate_synthetic_glm_environment(tmp_path,monkeypatch):
+    from scripts.eval.harness.runner import contract_checks
+    from scripts.eval.harness.contracts import source_manifest, affected_paths
+    assert 'scripts/ci/offline_env.py' in source_manifest()['files']
+    assert affected_paths(['scripts/ci/offline_env.py'])
+    monkeypatch.setenv('LLM_MODEL',GLM_MODEL)
+    monkeypatch.setenv('LLM_BASE_URL',GLM_CODING_URL)
+    monkeypatch.setenv('LLM_API_KEY','synthetic-parent-key-canary')
+    monkeypatch.setenv('PYTEST_ADDOPTS','--synthetic-invalid-option')
+    monkeypatch.setenv('PYTHON_DOTENV_DISABLED','1')
+    monkeypatch.setenv('DATA_DIR',str(tmp_path/'parent-data'))
+    suite={'contract_tests':['tests/test_harness_evaluation.py']}
+    result=await contract_checks(suite,tmp_path)
+    assert result['passed'],result
+    assert result['failures']==0 and result['skipped']==0
+    assert 'synthetic-parent-key-canary' not in (tmp_path/'contracts.log').read_text()
+    env=__import__('os').environ
+    assert env['LLM_MODEL']==GLM_MODEL and env['LLM_BASE_URL']==GLM_CODING_URL
+    assert env['LLM_API_KEY']=='synthetic-parent-key-canary'
+    assert env['DATA_DIR']==str(tmp_path/'parent-data')

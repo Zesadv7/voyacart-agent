@@ -23,8 +23,12 @@ from scripts.eval.harness.model_config import ModelCallBudget, model_call_budget
 
 async def contract_checks(suite, output):
     start=time.monotonic()
-    with (output/'contracts.log').open('w') as log:
-        test_environment={k:v for k,v in os.environ.items() if k!='PYTEST_ADDOPTS'}
+    from scripts.ci.offline_env import isolated_env
+    # 同一评测进程持有真实模型配置，离线契约子进程只能获得本机假服务环境。
+    # 不修改 os.environ，随后真实评测继续使用原冻结模型配置。
+    with tempfile.TemporaryDirectory(prefix='voyacart-contracts-') as directory, (output/'contracts.log').open('w') as log:
+        test_environment=isolated_env(Path(directory))
+        test_environment['VOYACART_REDIS_TEST_TRANSPORT']='tcp'
         process=await asyncio.create_subprocess_exec(sys.executable,'-m','pytest','-q',
             *suite['contract_tests'],'--junitxml='+str(output/'contracts.xml'),cwd=ROOT,env=test_environment,stdout=log,stderr=log)
         try:code=await process.wait()
